@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 11160431}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.167, y: 0.69923, z: -4.15205}
+  m_LocalPosition: {x: 1.254, y: 0.69923, z: -4.15205}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_StartingInteractionStrengthFilters: []
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
-  m_AttachTransform: {fileID: 1027014547}
+  m_AttachTransform: {fileID: 0}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 1
   m_MatchAttachPosition: 1
@@ -3258,12 +3258,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 736945073}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b91469103dcd6a543abb062045332ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  maxAngle: 25
+  maxAngle: 45
 --- !u!65 &736945076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3283,8 +3283,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.11168575, y: 0.05931282, z: 0.13237238}
-  m_Center: {x: -0.059662938, y: -0.053968787, z: -0.2401464}
+  m_Size: {x: 0.12895918, y: 0.14487219, z: 0.18669224}
+  m_Center: {x: -0.06829965, y: -0.05687827, z: -0.26730633}
 --- !u!114 &736945077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4966,7 +4966,7 @@ MeshCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 6367337552658733537, guid: 7ed4494aee293c84d8811ba9754b6cbd, type: 3}
 --- !u!1 &1314181102
@@ -5281,7 +5281,7 @@ Transform:
   m_GameObject: {fileID: 1317161178}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.10181179, z: -0, w: 0.99480367}
-  m_LocalPosition: {x: 1.336, y: 0.69923, z: -4.191}
+  m_LocalPosition: {x: 1.417, y: 0.69923, z: -4.175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7163,7 +7163,7 @@ MonoBehaviour:
   m_StartingInteractionStrengthFilters: []
   m_AutoFindParentInteractableInHierarchy: 0
   m_ParentInteractableObject: {fileID: 0}
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 1027014547}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -7265,8 +7265,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.10352063, y: 0.07967144, z: 0.11351824}
-  m_Center: {x: 0.114726305, y: -0.10299793, z: -0.13226485}
+  m_Size: {x: 0.11707544, y: 0.07967144, z: 0.1267333}
+  m_Center: {x: 0.11414099, y: -0.10299793, z: -0.12565732}
 --- !u!1 &1946263876
 GameObject:
   m_ObjectHideFlags: 0
