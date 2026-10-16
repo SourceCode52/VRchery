@@ -17,6 +17,7 @@ public class HandednessManager : MonoBehaviour
     public Handedness Current { get; private set; }      // the shooting (drawing) hand
     public bool TeleportAllowed { get; private set; } = true;
     public event Action<Handedness> Changed;
+    public Transform DrawHand => (Current == Handedness.Right ? rightController : leftController).transform;
 
     void Awake() => Instance = this;
     void Start() => Set(startingHandedness);
