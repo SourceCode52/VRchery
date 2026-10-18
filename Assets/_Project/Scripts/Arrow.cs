@@ -36,8 +36,9 @@ public class Arrow : MonoBehaviour
         if (!flying) return;
         flying = false;
 
-        bool hitTarget = c.collider.GetComponentInParent<ArrowTarget>() != null;
-        if (hitTarget && lastVelocity.magnitude >= minStickSpeed)
+        bool sticks = c.collider.GetComponentInParent<ArrowTarget>() != null
+                   || c.collider.GetComponentInParent<ArrowStickSurface>() != null;
+        if (sticks && lastVelocity.magnitude >= minStickSpeed)
             Stick(c);
         // otherwise physics takes over and Cleanup removes it later
     }
@@ -48,7 +49,10 @@ public class Arrow : MonoBehaviour
         Vector3 dir = lastVelocity.normalized;
         rb.isKinematic = true;
         transform.rotation = Quaternion.LookRotation(dir);
-        transform.position += (c.GetContact(0).point - tip.position) + dir * stickDepth;
+        Vector3 point = c.GetContact(0).point;
+        var ray = new Ray(tip.position - dir * 0.5f, dir);   // where the line of flight meets the surface
+        if (c.collider.Raycast(ray, out RaycastHit hit, 2f)) point = hit.point;
+        transform.position += (point - tip.position) + dir * stickDepth;
     }
 
     void Cleanup() => Destroy(gameObject);

@@ -1,64 +1,88 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit.Inputs.Readers;
 
+/// <summary>
+/// Curls the finger bones procedurally. Reads HandInput on the controller.
+/// Grab mode:       trigger or grip closes the whole hand, and it stays closed while something is held.
+/// StringHook mode: trigger curls index, middle and ring; pinky follows a little; thumb stays open.
+/// </summary>
 public class HandPoser : MonoBehaviour
 {
-    [SerializeField] XRInputValueReader<float> gripInput = new XRInputValueReader<float>("Grip");
-    [SerializeField] XRInputValueReader<float> triggerInput = new XRInputValueReader<float>("Trigger");
+    [SerializeField] HandInput input;
 
     [Header("Bones (joints 1-3 of each finger)")]
-    [SerializeField] Transform[] gripFingerBones;  // middle, ring, pinky
-    [SerializeField] Transform[] thumbBones;
     [SerializeField] Transform[] indexBones;
+    [SerializeField] Transform[] middleBones;
+    [SerializeField] Transform[] ringBones;
+    [SerializeField] Transform[] pinkyBones;
+    [SerializeField] Transform[] thumbBones;
 
-    [Header("Rotation at full squeeze (tune in Play mode)")]
+    [Header("Rotation at full curl (tune in Play mode)")]
     [SerializeField] Vector3 fingerCurl = new Vector3(80, 0, 0);
     [SerializeField] Vector3 thumbCurl = new Vector3(0, 0, 40);
     [SerializeField] float smoothing = 15f;
 
-    Quaternion[] gripRest, thumbRest, indexRest;
-    float grip, trigger;
+    [Header("Poses")]
+    [SerializeField, Range(0f, 1f)] float holdCurl = 0.85f;    // fingers stay this closed while holding an object
+    [SerializeField, Range(0f, 1f)] float hookCurl = 0.7f;     // string hook: index/middle/ring at full trigger
+    [SerializeField, Range(0f, 1f)] float pinkyHookShare = 0.4f;
+
+    Quaternion[] indexRest, middleRest, ringRest, pinkyRest, thumbRest;
+    float index, middle, ring, pinky, thumb;
 
     void Awake()
     {
-        gripRest = Capture(gripFingerBones);
-        thumbRest = Capture(thumbBones);
         indexRest = Capture(indexBones);
-    }
-
-    void OnEnable()
-    {
-        gripInput?.EnableDirectActionIfModeUsed();
-        triggerInput?.EnableDirectActionIfModeUsed();
-    }
-
-    void OnDisable()
-    {
-        gripInput?.DisableDirectActionIfModeUsed();
-        triggerInput?.DisableDirectActionIfModeUsed();
+        middleRest = Capture(middleBones);
+        ringRest = Capture(ringBones);
+        pinkyRest = Capture(pinkyBones);
+        thumbRest = Capture(thumbBones);
     }
 
     void LateUpdate()
     {
-        float step = smoothing * Time.deltaTime;
-        grip = Mathf.MoveTowards(grip, gripInput.ReadValue(), step);
-        trigger = Mathf.MoveTowards(trigger, triggerInput.ReadValue(), step);
+        float tIndex, tMiddle, tRing, tPinky, tThumb;
 
-        Apply(gripFingerBones, gripRest, fingerCurl, grip);
-        Apply(thumbBones, thumbRest, thumbCurl, grip);
-        Apply(indexBones, indexRest, fingerCurl, trigger);
+        if (input.Mode == HandMode.StringHook)
+        {
+            float hook = input.Trigger * hookCurl;
+            tIndex = tMiddle = tRing = hook;
+            tPinky = hook * pinkyHookShare;
+            tThumb = 0f;
+        }
+        else
+        {
+            float grab = Mathf.Max(input.Grip, input.Trigger);
+            if (input.Holding) grab = Mathf.Max(grab, holdCurl);
+            tIndex = tMiddle = tRing = tPinky = tThumb = grab;
+        }
+
+        float step = smoothing * Time.deltaTime;
+        index = Mathf.MoveTowards(index, tIndex, step);
+        middle = Mathf.MoveTowards(middle, tMiddle, step);
+        ring = Mathf.MoveTowards(ring, tRing, step);
+        pinky = Mathf.MoveTowards(pinky, tPinky, step);
+        thumb = Mathf.MoveTowards(thumb, tThumb, step);
+
+        Apply(indexBones, indexRest, fingerCurl, index);
+        Apply(middleBones, middleRest, fingerCurl, middle);
+        Apply(ringBones, ringRest, fingerCurl, ring);
+        Apply(pinkyBones, pinkyRest, fingerCurl, pinky);
+        Apply(thumbBones, thumbRest, thumbCurl, thumb);
     }
 
     static Quaternion[] Capture(Transform[] bones)
     {
+        if (bones == null) return new Quaternion[0];
         var rest = new Quaternion[bones.Length];
-        for (int i = 0; i < bones.Length; i++) rest[i] = bones[i].localRotation;
+        for (int i = 0; i < bones.Length; i++)
+            rest[i] = bones[i] != null ? bones[i].localRotation : Quaternion.identity;
         return rest;
     }
 
     static void Apply(Transform[] bones, Quaternion[] rest, Vector3 curl, float t)
     {
+        if (bones == null) return;
         for (int i = 0; i < bones.Length; i++)
-            bones[i].localRotation = rest[i] * Quaternion.Euler(curl * t);
+            if (bones[i] != null) bones[i].localRotation = rest[i] * Quaternion.Euler(curl * t);
     }
 }
