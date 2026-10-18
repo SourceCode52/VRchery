@@ -3882,8 +3882,8 @@ MonoBehaviour:
   shootingSpot: {fileID: 669049099}
   returnSpot: {fileID: 1388977462}
   cooldown: 1
-  rightHandedYaw: 150
-  leftHandedYaw: -150
+  rightHandedYaw: 140
+  leftHandedYaw: -140
 --- !u!1 &1426611561
 GameObject:
   m_ObjectHideFlags: 0

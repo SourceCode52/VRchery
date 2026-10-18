@@ -14,8 +14,8 @@ public class RangeStateController : MonoBehaviour
     [SerializeField] float cooldown = 1f;
 
     [Header("Shooting stance - extra yaw added to the Shooting Spot's rotation, per shooting hand")]
-    [SerializeField] float rightHandedYaw = 150f;
-    [SerializeField] float leftHandedYaw = -150f;
+    [SerializeField] float rightHandedYaw = 140f;
+    [SerializeField] float leftHandedYaw = -140f;
 
     public RangeState State { get; private set; } = RangeState.Building;
     public bool ExitBlocked { get; set; }   // the bow will set this later (string drawn, arrow in flight)
