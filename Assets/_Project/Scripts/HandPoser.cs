@@ -42,7 +42,7 @@ public class HandPoser : MonoBehaviour
     {
         float tIndex, tMiddle, tRing, tPinky, tThumb;
 
-        if (input.Mode == HandMode.StringHook)
+        if (input.Mode == HandMode.StringHook && !input.HoldingArrow)
         {
             float hook = input.Trigger * hookCurl;
             tIndex = tMiddle = tRing = hook;
@@ -52,7 +52,7 @@ public class HandPoser : MonoBehaviour
         else
         {
             float grab = Mathf.Max(input.Grip, input.Trigger);
-            if (input.Holding) grab = Mathf.Max(grab, holdCurl);
+            if (input.Holding || input.HoldingArrow) grab = Mathf.Max(grab, holdCurl);
             tIndex = tMiddle = tRing = tPinky = tThumb = grab;
         }
 

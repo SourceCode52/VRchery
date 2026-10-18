@@ -1,25 +1,34 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Stand-in bow. The string is flat until the drawing hand pulls it; how far it goes is up to the player,
 /// limited only by the arrow: the tip can't be drawn back past the shelf.
-/// The arrow lies on the shelf (above the grip) and slides along a fixed line parallel to the bow's forward axis.
+/// An arrow is nocked by bringing it (from the Quiver) to the nocking point of a bow held in the other hand;
+/// it then lies on the shelf (above the grip) and slides along a fixed line parallel to the bow's forward axis.
 /// Drawing uses the TRIGGER of the drawing hand (index, middle, ring hook the string).
 /// </summary>
 [RequireComponent(typeof(BowGrabInteractable))]
 public class Bow : MonoBehaviour
 {
+    static readonly List<Bow> all = new List<Bow>();
+    public static IReadOnlyList<Bow> All => all;
+
     [Header("Parts")]
     [SerializeField] Transform gripPoint;
     [SerializeField] Transform arrowShelf;      // where the arrow shaft lies; set up for a right-handed shooter (mirrored for left)
     [SerializeField] Transform upperTip;
     [SerializeField] Transform lowerTip;
     [SerializeField] LineRenderer stringLine;
-    [SerializeField] Arrow arrowPrefab;
+    [SerializeField] Arrow arrowPrefab;         // only used when there is no Quiver in the scene (infinite arrows)
 
     [Header("Arrow")]
     [SerializeField] float arrowLength = 0.8128f;     // 32 inch
     [SerializeField] float shelfClearance = 0.04f;    // arrow tip must stay this far in front of the shelf
+
+    [Header("Nocking")]
+    [SerializeField] float nockRadius = 0.10f;        // arrow's nock end this close to the nocking point
+    [SerializeField] float nockAngle = 60f;           // and the arrow within this angle of the bow's forward
 
     [Header("Draw")]
     [SerializeField] float pickRadius = 0.15f;        // how close the hand must be to the string
@@ -39,19 +48,35 @@ public class Bow : MonoBehaviour
     float draw;
 
     public bool Drawing => drawing;
+    public bool HasArrow => nocked != null;
     public float Draw => draw;                                        // metres the string is back from flat
     public float Tension => Mathf.Clamp01(draw / fullDraw);           // for audio / haptics
 
     Vector3 RestLocal => (upperTip.localPosition + lowerTip.localPosition) * 0.5f;   // flat string
 
+    Vector3 ShelfLocal(Handedness side)
+    {
+        Vector3 s = arrowShelf.localPosition;
+        if (side == Handedness.Left) s.x = -s.x;
+        return s;
+    }
+
+    // where the arrow's nock end sits at rest: on the shelf line, on the flat string
+    Vector3 NockRestLocal(Handedness side)
+    {
+        Vector3 s = ShelfLocal(side);
+        return new Vector3(s.x, s.y, RestLocal.z);
+    }
+
+    void OnEnable() => all.Add(this);
+    void OnDisable() => all.Remove(this);
+
     void Awake()
     {
         grab = GetComponent<BowGrabInteractable>();
-        if (arrowPrefab == null || arrowPrefab.GetComponent<Collider>() == null ||
-            gripPoint == null || arrowShelf == null || upperTip == null ||
-            lowerTip == null || stringLine == null)
+        if (gripPoint == null || arrowShelf == null || upperTip == null || lowerTip == null || stringLine == null)
         {
-            Debug.LogError("Bow: a slot is empty, or the Arrow prefab's root has no Collider.", this);
+            Debug.LogError("Bow: a slot is empty.", this);
             enabled = false;
         }
     }
@@ -65,6 +90,9 @@ public class Bow : MonoBehaviour
         Transform hand = hands.DrawHand;
         HandInput handInput = hands.DrawHandInput;
 
+        // someone else (the quiver refilling) took the arrow away
+        if (nocked != null && nocked.State != ArrowState.Nocked) { if (drawing) EndDraw(false); nocked = null; }
+
         bool triggerDown = handInput.Trigger > (drawing ? triggerOff : triggerOn);   // hysteresis
         bool squeezed = triggerDown && !wasTriggerDown;
         wasTriggerDown = triggerDown;
@@ -75,10 +103,21 @@ public class Bow : MonoBehaviour
             else if (!triggerDown) EndDraw(true);                       // let go of the string: shoot
             else UpdateDraw(hand, hands.Current);
         }
-        else
+
+        if (!drawing)
         {
             SetString(RestLocal);
-            if (shooting && squeezed && grab.isSelected && HeldByOtherHand(hand) &&
+            bool usable = shooting && grab.isSelected && HeldByOtherHand(hand);
+
+            if (nocked != null)
+            {
+                if (!usable) Unnock();                                  // bow put down: the arrow goes back
+                else RestArrow(hands.Current);
+            }
+
+            bool arrowReady = nocked != null || Quiver.Instance == null;   // no quiver: arrows are unlimited
+            bool carrying = Quiver.Instance != null && Quiver.Instance.Holding;
+            if (usable && squeezed && arrowReady && !carrying &&
                 Vector3.Distance(hand.position, transform.TransformPoint(RestLocal)) < pickRadius)
                 BeginDraw(hand, hands.Current);
         }
@@ -92,18 +131,59 @@ public class Bow : MonoBehaviour
         return holder != null && !holder.transform.IsChildOf(drawHand);
     }
 
-    void BeginDraw(Transform hand, Handedness side)
+    /// <summary>The quiver offers an arrow it is carrying. True if it snapped onto the string.</summary>
+    public bool TryNock(Arrow arrow, Transform drawHand)
     {
-        drawing = true;
-        nocked = Instantiate(arrowPrefab);
+        if (!isActiveAndEnabled || nocked != null || drawing) return false;
+        var range = RangeStateController.Instance;
+        if (range != null && range.State != RangeState.Shooting) return false;
+        if (!grab.isSelected || !HeldByOtherHand(drawHand)) return false;
 
-        // the arrow must not collide with the bow or the player it leaves
-        var arrowCol = nocked.GetComponent<Collider>();
+        Vector3 nockPoint = transform.TransformPoint(NockRestLocal(HandednessManager.Instance.Current));
+        if (Vector3.Distance(arrow.transform.position, nockPoint) > nockRadius) return false;
+        if (Vector3.Angle(arrow.transform.forward, transform.forward) > nockAngle) return false;
+
+        nocked = arrow;
+        arrow.SetState(ArrowState.Nocked);
+        IgnoreMyColliders(arrow);
+        RestArrow(HandednessManager.Instance.Current);
+        return true;
+    }
+
+    void IgnoreMyColliders(Arrow arrow)
+    {
+        var arrowCol = arrow.GetComponent<Collider>();
         foreach (var c in GetComponentsInChildren<Collider>())
             Physics.IgnoreCollision(arrowCol, c);
-        foreach (var c in hand.root.GetComponentsInChildren<Collider>())
-            Physics.IgnoreCollision(arrowCol, c);
+    }
 
+    void RestArrow(Handedness side)
+    {
+        aim = transform.forward;
+        nocked.transform.SetPositionAndRotation(transform.TransformPoint(NockRestLocal(side)), transform.rotation);   // arrow pivot is its nock end
+    }
+
+    void Unnock()
+    {
+        var a = nocked;
+        nocked = null;
+        if (a == null) return;
+        if (a.Owner != null) a.Owner.Recycle(a);
+        else Destroy(a.gameObject);
+    }
+
+    void BeginDraw(Transform hand, Handedness side)
+    {
+        if (nocked == null)   // no quiver in the scene: make an arrow
+        {
+            nocked = Instantiate(arrowPrefab);
+            nocked.SetState(ArrowState.Nocked);
+            IgnoreMyColliders(nocked);
+            var arrowCol = nocked.GetComponent<Collider>();
+            foreach (var c in hand.root.GetComponentsInChildren<Collider>())
+                Physics.IgnoreCollision(arrowCol, c);
+        }
+        drawing = true;
         UpdateDraw(hand, side);
     }
 
@@ -111,8 +191,7 @@ public class Bow : MonoBehaviour
     {
         // The arrow lies on the shelf and slides back and forth along a fixed line through it,
         // parallel to the bow's forward axis, so its tip always points forward relative to the bow.
-        Vector3 shelfLocal = arrowShelf.localPosition;
-        if (side == Handedness.Left) shelfLocal.x = -shelfLocal.x;
+        Vector3 shelfLocal = ShelfLocal(side);
         Vector3 handLocal = transform.InverseTransformPoint(hand.position);
 
         // Hand wandered too far from the arrow's line: the string slips.
@@ -140,10 +219,18 @@ public class Bow : MonoBehaviour
         drawing = false;
         if (nocked != null)
         {
-            if (fire && draw >= minDraw) nocked.Launch(aim * Speed(draw));
-            else Destroy(nocked.gameObject);
+            if (fire && draw >= minDraw)
+            {
+                nocked.Launch(aim * Speed(draw));
+                nocked = null;
+            }
+            else if (nocked.Owner == null)
+            {
+                Destroy(nocked.gameObject);        // unlimited-arrows fallback: nothing to keep
+                nocked = null;
+            }
+            // otherwise the arrow stays nocked: it goes back to rest on the shelf
         }
-        nocked = null;
         draw = 0f;
         SetString(RestLocal);
     }

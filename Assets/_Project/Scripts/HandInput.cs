@@ -32,6 +32,7 @@ public class HandInput : MonoBehaviour
     public float Trigger { get; private set; }
     public HandMode Mode { get; private set; }
     public bool Holding => grabInteractor != null && grabInteractor.hasSelection;
+    public bool HoldingArrow { get; set; }   // set by the Quiver while this hand carries an arrow
 
     bool pressed;
 
