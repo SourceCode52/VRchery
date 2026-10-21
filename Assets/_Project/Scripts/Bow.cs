@@ -47,6 +47,10 @@ public class Bow : MonoBehaviour
     Vector3 aim = Vector3.forward;
     float draw;
 
+    public static event System.Action<Bow> Loosed;                   // an arrow has just been shot
+
+    public bool IsHeld => grab != null && grab.isSelected;
+    public bool HeldByOffHand => IsHeld && HeldByOtherHand(HandednessManager.Instance.DrawHand);   // the right way round: bow in the non-drawing hand
     public bool Drawing => drawing;
     public bool HasArrow => nocked != null;
     public float Draw => draw;                                        // metres the string is back from flat
@@ -223,6 +227,7 @@ public class Bow : MonoBehaviour
             {
                 nocked.Launch(aim * Speed(draw));
                 nocked = null;
+                Loosed?.Invoke(this);
             }
             else if (nocked.Owner == null)
             {
