@@ -28,7 +28,6 @@ public class Quiver : MonoBehaviour
     [SerializeField] float arrowLength = 0.8128f;
     [SerializeField] float returnDelay = 5f;          // seconds after the last arrow is gone, then all of them drop back in
     [SerializeField] float looseReturnDelay = 5f;     // an arrow lying around outside the tube drops back in after this long
-    [SerializeField] float dropInterval = 0.3f;       // seconds between arrows falling into the tube
 
     [Header("Tube (built by the QuiverTube component on it)")]
     [SerializeField] Transform tube;
@@ -63,7 +62,7 @@ public class Quiver : MonoBehaviour
     Vector3 heldPos;
     Quaternion heldRot = Quaternion.identity;
     Phase phase = Phase.Hidden;
-    float phaseTime, refillTimer = -1f, nextDropTime;
+    float phaseTime, refillTimer = -1f;
     bool squeezing;
     Vector3 gripPrev, handVelocity;
 
@@ -156,7 +155,6 @@ public class Quiver : MonoBehaviour
                 {
                     tube.localPosition = Vector3.zero;
                     phase = Phase.Ready;
-                    nextDropTime = Time.time;
                     foreach (var a in arrows) Enqueue(a);
                 }
                 break;
@@ -330,7 +328,7 @@ public class Quiver : MonoBehaviour
         Enqueue(a);
     }
 
-    // Arrows disappear, then fall into the tube one at a time.
+    // Arrows disappear, then fall into the tube together.
     void Enqueue(Arrow a)
     {
         if (pending.Contains(a)) return;
@@ -338,13 +336,15 @@ public class Quiver : MonoBehaviour
         pending.Add(a);
     }
 
+    // every waiting arrow falls in at the same moment (each into its own corner of the tube)
     void FeedPending()
     {
-        if (pending.Count == 0 || Time.time < nextDropTime) return;
-        var a = pending[0];
-        pending.RemoveAt(0);
-        DropIn(a, Array.IndexOf(arrows, a));
-        nextDropTime = Time.time + dropInterval;
+        while (pending.Count > 0)
+        {
+            var a = pending[0];
+            pending.RemoveAt(0);
+            DropIn(a, Array.IndexOf(arrows, a));
+        }
     }
 
     // Each arrow has its own corner of the tube (120 degrees apart), starts almost upright just over the mouth,

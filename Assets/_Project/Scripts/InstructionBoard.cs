@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public enum GuideStep { Welcome, PickUpBow, PickUpArrow, NockArrow, Draw, Release, Loosed, RoundComplete }
+public enum GuideStep { Welcome, Nocking, Drawing, Aiming, Firing, RoundComplete }
 
 /// <summary>One screen of the board. Give it an image (16:9, e.g. 1920x1080) to replace the text layout.</summary>
 [Serializable]
@@ -45,7 +45,7 @@ public class InstructionBoard : MonoBehaviour
 
     [Header("Slides")]
     [SerializeField] List<BoardSlide> slides = new List<BoardSlide>();
-    [SerializeField] float loosedShowTime = 2.5f;      // "arrow away" stays up this long after a shot
+    [SerializeField] float firingAfter = 1.5f;         // seconds held at full draw before it says "let go to shoot"
 
     [Header("Editor preview (right-click the component > Preview Slide)")]
     [SerializeField] GuideStep previewStep = GuideStep.Welcome;
@@ -56,7 +56,6 @@ public class InstructionBoard : MonoBehaviour
     MaterialPropertyBlock block;
     GuideStep shownStep = (GuideStep)(-1);
     Handedness shownHand = (Handedness)(-1);
-    float loosedUntil;
 
     public GuideStep CurrentStep { get; private set; }
 
@@ -74,14 +73,12 @@ public class InstructionBoard : MonoBehaviour
 
     void OnEnable()
     {
-        Bow.Loosed += OnLoosed;
         var hands = HandednessManager.Instance;
         if (hands != null) { hands.Changed += OnHandednessChanged; PlaceFor(hands.Current); }
     }
 
     void OnDisable()
     {
-        Bow.Loosed -= OnLoosed;
         var hands = HandednessManager.Instance;
         if (hands != null) hands.Changed -= OnHandednessChanged;
     }
@@ -95,8 +92,6 @@ public class InstructionBoard : MonoBehaviour
     }
 
     void OnHandednessChanged(Handedness h) => PlaceFor(h);
-
-    void OnLoosed(Bow bow) => loosedUntil = Time.time + loosedShowTime;
 
     void PlaceFor(Handedness h)
     {
@@ -137,26 +132,22 @@ public class InstructionBoard : MonoBehaviour
         }
     }
 
-    /// <summary>What should the archer be doing right now?</summary>
+    /// <summary>What should the archer be doing right now? (Nocking -> Drawing -> Aiming -> Firing)</summary>
     GuideStep Evaluate()
     {
         var range = RangeStateController.Instance;
         if (range != null && range.State != RangeState.Shooting) return GuideStep.Welcome;
-        if (Time.time < loosedUntil) return GuideStep.Loosed;
+
+        var quiver = Quiver.Instance;
+        if (quiver != null && quiver.ArrowsLeft == 0 && !quiver.Holding) return GuideStep.RoundComplete;
 
         Bow bow = null;
         foreach (var b in Bow.All) if (b.HeldByOffHand) { bow = b; break; }
-        if (bow == null) return GuideStep.PickUpBow;
-        if (bow.Drawing) return GuideStep.Release;
-        if (bow.HasArrow) return GuideStep.Draw;
+        if (bow == null) return GuideStep.Nocking;                       // no bow in the right hand yet: it all starts there
 
-        var quiver = Quiver.Instance;
-        if (quiver != null)
-        {
-            if (quiver.Holding) return GuideStep.NockArrow;
-            if (quiver.ArrowsLeft == 0) return GuideStep.RoundComplete;
-        }
-        return GuideStep.PickUpArrow;
+        if (bow.Anchored) return bow.AnchoredTime >= firingAfter ? GuideStep.Firing : GuideStep.Aiming;
+        if (bow.Drawing || bow.HasArrow) return GuideStep.Drawing;       // the arrow is on the string: next, pull it back
+        return GuideStep.Nocking;
     }
 
     // ---------- showing a slide ----------
@@ -203,18 +194,14 @@ public class InstructionBoard : MonoBehaviour
         {
             new BoardSlide { step = GuideStep.Welcome, label = "WELCOME", title = "Welcome to the range",
                 body = "Choose your shooting hand, then press START to walk to the shooting line." },
-            new BoardSlide { step = GuideStep.PickUpBow, label = "STEP 1 OF 5", title = "Take hold of the bow",
-                body = "Grab the bow with your {bow} hand. Your {draw} hand will draw the string." },
-            new BoardSlide { step = GuideStep.PickUpArrow, label = "STEP 2 OF 5", title = "Take an arrow",
-                body = "With your {draw} hand, squeeze grip or trigger on an arrow sticking out of the tube and pull it free." },
-            new BoardSlide { step = GuideStep.NockArrow, label = "STEP 3 OF 5", title = "Nock the arrow",
-                body = "Bring the back of the arrow to the string, on the arrow rest just above the grip. It clicks on." },
-            new BoardSlide { step = GuideStep.Draw, label = "STEP 4 OF 5", title = "Draw the string",
-                body = "Put your {draw} hand on the string, squeeze and hold the trigger, then pull straight back." },
-            new BoardSlide { step = GuideStep.Release, label = "STEP 5 OF 5", title = "Aim and release",
-                body = "Hold steady, line up the target, then let go of the trigger to shoot." },
-            new BoardSlide { step = GuideStep.Loosed, label = "ARROW AWAY", title = "Nice shot",
-                body = "Watch it fly. Take the next arrow when you are ready." },
+            new BoardSlide { step = GuideStep.Nocking, label = "STEP 1 OF 4", title = "Nock the arrow",
+                body = "Hold the bow in your {bow} hand. With your {draw} hand take an arrow from the tube and bring its back end to the string. It clicks on." },
+            new BoardSlide { step = GuideStep.Drawing, label = "STEP 2 OF 4", title = "Draw the string",
+                body = "Put your {draw} hand on the string, squeeze and hold the trigger, then pull the string back to your face." },
+            new BoardSlide { step = GuideStep.Aiming, label = "STEP 3 OF 4", title = "Aim",
+                body = "Hold the draw at your face. Point the bow at the target and look through the sight." },
+            new BoardSlide { step = GuideStep.Firing, label = "STEP 4 OF 4", title = "Release",
+                body = "When you are ready, let go of the trigger to loose the arrow." },
             new BoardSlide { step = GuideStep.RoundComplete, label = "ROUND COMPLETE", title = "That is all your arrows",
                 body = "They return to the tube in a moment. Shoot another round, or press EXIT to leave the line." },
         };

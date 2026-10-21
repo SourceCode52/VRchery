@@ -35,28 +35,55 @@ public class Bow : MonoBehaviour
     [SerializeField] float slipDistance = 0.3f;       // pulled this far past the arrow's limit: string slips, no shot
     [SerializeField] float maxLateral = 0.25f;        // hand further than this from the arrow's line: string slips, no shot
     [SerializeField] float minDraw = 0.08f;           // shorter pulls don't fire
-    [SerializeField] float fullDraw = 0.7f;           // 28 inch: the draw the speed range is calibrated to
+    [SerializeField] float fullDraw = 0.55f;          // full draw (32 inch arrow, ~8 inch brace height): the draw the speed range is calibrated to
     [SerializeField] float triggerOn = 0.6f;
     [SerializeField] float triggerOff = 0.3f;
     [SerializeField] float minSpeed = 5f;
     [SerializeField] float maxSpeed = 45f;
+
+    [Header("Focus (how far into the aiming state the archer is, from the draw length)")]
+    [SerializeField] float focusStartLength = 0.33f;  // draw length in metres (archery measure, see DrawLength) where the focus begins to build (13 in)
+    [SerializeField] float focusFullLength = 0.66f;   // and where it is complete: fully darkened from here on (26 in)
+
+    [Header("Steady aim - the bow is held steadier the closer to full focus (smooths hand tremor)")]
+    [SerializeField] float steadyRotationSmoothing = 3f;     // follow speed of the bow's rotation at full focus (lower = steadier)
+    [SerializeField] float steadyPositionSmoothing = 10f;    // same for its position
+    [SerializeField] float looseSmoothing = 30f;             // follow speed when not steadied (high = practically no smoothing)
+
+    [Header("Limb flex (optional: the limb pivots; the string tips should be children of them)")]
+    [SerializeField] Transform upperLimb;
+    [SerializeField] Transform lowerLimb;
+    [SerializeField] float maxFlexDegrees = 8f;
 
     BowGrabInteractable grab;
     Arrow nocked;
     bool drawing, wasTriggerDown;
     Vector3 aim = Vector3.forward;
     float draw;
+    Vector3 restLocal;                       // the flat string's centre, measured before any limb flexes
+    float anchoredTime, steady;
+    Quaternion upperRestRot, lowerRestRot;
+    bool grabSettingsSaved, savedSmoothPos, savedSmoothRot;
+    float savedPosAmount, savedRotAmount;
 
     public static event System.Action<Bow> Loosed;                   // an arrow has just been shot
 
     public bool IsHeld => grab != null && grab.isSelected;
     public bool HeldByOffHand => IsHeld && HeldByOtherHand(HandednessManager.Instance.DrawHand);   // the right way round: bow in the non-drawing hand
     public bool Drawing => drawing;
+    /// <summary>0..1: the build-up of focus while the string is drawn (0 when not drawing). Drives the vignette and the steadiness.</summary>
+    public float AimFocus => drawing ? Mathf.InverseLerp(focusStartLength, focusFullLength, DrawLength) : 0f;
+    /// <summary>Drawn far enough for full focus.</summary>
+    public bool Anchored => drawing && DrawLength >= focusFullLength;
+    /// <summary>Archery draw length in metres (AMO): from the nock back to the grip, plus 0.0445 m. Only meaningful while drawing.</summary>
+    public float DrawLength => arrowShelf.localPosition.z - restLocal.z + draw + 0.0445f;
+    /// <summary>How long (seconds) the string has been held at full draw.</summary>
+    public float AnchoredTime => anchoredTime;
     public bool HasArrow => nocked != null;
     public float Draw => draw;                                        // metres the string is back from flat
     public float Tension => Mathf.Clamp01(draw / fullDraw);           // for audio / haptics
 
-    Vector3 RestLocal => (upperTip.localPosition + lowerTip.localPosition) * 0.5f;   // flat string
+    Vector3 RestLocal => restLocal;   // flat string
 
     Vector3 ShelfLocal(Handedness side)
     {
@@ -82,7 +109,11 @@ public class Bow : MonoBehaviour
         {
             Debug.LogError("Bow: a slot is empty.", this);
             enabled = false;
+            return;
         }
+        restLocal = transform.InverseTransformPoint((upperTip.position + lowerTip.position) * 0.5f);
+        if (upperLimb != null) upperRestRot = upperLimb.localRotation;
+        if (lowerLimb != null) lowerRestRot = lowerLimb.localRotation;
     }
 
     void LateUpdate()
@@ -116,7 +147,11 @@ public class Bow : MonoBehaviour
             if (nocked != null)
             {
                 if (!usable) Unnock();                                  // bow put down: the arrow goes back
-                else RestArrow(hands.Current);
+                else
+                {
+                    RestArrow(hands.Current);
+                    SetString(NockRestLocal(hands.Current));            // the string runs through the back of the arrow
+                }
             }
 
             bool arrowReady = nocked != null || Quiver.Instance == null;   // no quiver: arrows are unlimited
@@ -126,7 +161,45 @@ public class Bow : MonoBehaviour
                 BeginDraw(hand, hands.Current);
         }
 
+        UpdateFocus();
         if (range != null) range.ExitBlocked = drawing;                 // can't leave the range mid-draw
+    }
+
+    // ---------------------------------------------------------------- focus, steadiness, limb flex
+    void UpdateFocus()
+    {
+        float focus = AimFocus;
+        anchoredTime = Anchored ? anchoredTime + Time.deltaTime : 0f;
+
+        // limbs bend with the draw
+        if (upperLimb != null || lowerLimb != null)
+        {
+            float flex = maxFlexDegrees * Mathf.SmoothStep(0f, 1f, Tension);
+            if (upperLimb != null) upperLimb.localRotation = upperRestRot * Quaternion.Euler(-flex, 0f, 0f);   // tips come back towards the archer
+            if (lowerLimb != null) lowerLimb.localRotation = lowerRestRot * Quaternion.Euler(flex, 0f, 0f);
+        }
+
+        // the bow follows the hand more slowly the more focused the archer is: tremor is filtered out
+        steady = Mathf.MoveTowards(steady, focus, (focus > steady ? 6f : 4f) * Time.deltaTime);
+        if (steady > 0.001f)
+        {
+            if (!grabSettingsSaved)
+            {
+                grabSettingsSaved = true;
+                savedSmoothPos = grab.smoothPosition; savedSmoothRot = grab.smoothRotation;
+                savedPosAmount = grab.smoothPositionAmount; savedRotAmount = grab.smoothRotationAmount;
+            }
+            grab.smoothPosition = true;
+            grab.smoothRotation = true;
+            grab.smoothPositionAmount = Mathf.Lerp(looseSmoothing, steadyPositionSmoothing, steady);
+            grab.smoothRotationAmount = Mathf.Lerp(looseSmoothing, steadyRotationSmoothing, steady);
+        }
+        else if (grabSettingsSaved)
+        {
+            grab.smoothPosition = savedSmoothPos; grab.smoothRotation = savedSmoothRot;
+            grab.smoothPositionAmount = savedPosAmount; grab.smoothRotationAmount = savedRotAmount;
+            grabSettingsSaved = false;
+        }
     }
 
     bool HeldByOtherHand(Transform drawHand)
@@ -242,10 +315,12 @@ public class Bow : MonoBehaviour
 
     float Speed(float d) => Mathf.Min(Mathf.LerpUnclamped(minSpeed, maxSpeed, d / fullDraw), maxSpeed * 1.15f);
 
+    // nockPoint is in the bow's space; the tips are read live because the limbs may be flexing
     void SetString(Vector3 nockPoint)
     {
-        stringLine.SetPosition(0, upperTip.localPosition);
-        stringLine.SetPosition(1, nockPoint);
-        stringLine.SetPosition(2, lowerTip.localPosition);
+        Transform line = stringLine.transform;
+        stringLine.SetPosition(0, line.InverseTransformPoint(upperTip.position));
+        stringLine.SetPosition(1, line.InverseTransformPoint(transform.TransformPoint(nockPoint)));
+        stringLine.SetPosition(2, line.InverseTransformPoint(lowerTip.position));
     }
 }
