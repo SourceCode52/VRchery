@@ -385,7 +385,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 512
   m_Handedness: 0
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 1462773841}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -1770,8 +1770,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.060000002, y: 0.03169307, z: 0.29509813}
-  m_Center: {x: -0.00999953, y: 0.05877672, z: -0.08139703}
+  m_Size: {x: 0.060000002, y: 0.015780509, z: 0.29215845}
+  m_Center: {x: -0.009999499, y: 0.057831198, z: -0.08163498}
 --- !u!4 &372453867
 Transform:
   m_ObjectHideFlags: 0
@@ -2321,7 +2321,7 @@ MonoBehaviour:
   m_InteractionLayers:
     m_Bits: 1024
   m_Handedness: 0
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 968590770}
   m_KeepSelectedTargetValid: 1
   m_DisableVisualsWhenBlockedInGroup: 1
   m_StartingSelectedInteractable: {fileID: 0}
@@ -2404,8 +2404,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.11525762, y: 0.046319604, z: 0.4107859}
-  m_Center: {x: -0.05364865, y: -0.059078515, z: 0.028719544}
+  m_Size: {x: 0.11331165, y: 0.042708635, z: 0.4107859}
+  m_Center: {x: -0.054621637, y: -0.058760762, z: 0.028719544}
 --- !u!1 &498959530
 GameObject:
   m_ObjectHideFlags: 0
@@ -3465,7 +3465,7 @@ Transform:
   m_GameObject: {fileID: 968590769}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.004, y: -0.0576, z: 0.118}
+  m_LocalPosition: {x: 0.02, y: -0.06, z: 0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4387,8 +4387,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.054126013, y: 0.06686204, z: 1}
-  m_Center: {x: -0.0012773525, y: 0.03512345, z: -0.4792982}
+  m_Size: {x: 0.054126013, y: 0.040630132, z: 0.9837724}
+  m_Center: {x: -0.001277352, y: 0.027671944, z: -0.48741204}
 --- !u!4 &1281318992
 Transform:
   m_ObjectHideFlags: 0
@@ -5412,13 +5412,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1462773840}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0546, y: -0.1836, z: -0.1593}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.022, y: -0.1, z: -0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 91504379}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &1492502674
 GameObject:
   m_ObjectHideFlags: 0
@@ -5955,8 +5955,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.41355336, y: 0.041335028, z: 0.042609975}
-  m_Center: {x: 0.15, y: 0.1, z: 0.24518973}
+  m_Size: {x: 0.4044126, y: 0.039523933, z: 0.04260989}
+  m_Center: {x: 0.14947385, y: 0.10090523, z: 0.24518996}
 --- !u!1 &1610306136
 GameObject:
   m_ObjectHideFlags: 0
@@ -7112,8 +7112,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.41355336, y: 0.041335028, z: 0.042609975}
-  m_Center: {x: 0.12463981, y: -0.050398074, z: 0.24518973}
+  m_Size: {x: 0.4123993, y: 0.037642434, z: 0.042609975}
+  m_Center: {x: 0.12521684, y: -0.052244417, z: 0.24518973}
 --- !u!1 &2044004123
 GameObject:
   m_ObjectHideFlags: 0
