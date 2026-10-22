@@ -2052,6 +2052,7 @@ GameObject:
   m_Component:
   - component: {fileID: 560110111}
   - component: {fileID: 560110110}
+  - component: {fileID: 560110112}
   m_Layer: 0
   m_Name: Focus_Vignette
   m_TagString: Untagged
@@ -2095,6 +2096,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &560110112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 560110109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62054cfb151ec4349a505f57a79d44aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HarmFlash
+  material: {fileID: 2100000, guid: 69fb145541400954b8cc6f67fa761a4b, type: 2}
+  color: {r: 0.85, g: 0.02, b: 0.02, a: 0.6}
+  fadeInSeconds: 0.07
+  fadeOutSeconds: 0.5
+  innerRadius: -0.5
+  feather: 2
+  layer: 5
 --- !u!4 &584409954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5917138804416268707, guid: b635de2def43be74c8b16d5475233dc5, type: 3}
@@ -7648,6 +7668,20 @@ MonoBehaviour:
   upperLimb: {fileID: 1259929887}
   lowerLimb: {fileID: 1714478786}
   maxFlexDegrees: 8
+  logFailures: 1
+  nockPopLateral: 0.2
+  overdrawGrace: 0.03
+  maxRestCant: 50
+  maxRestPitchDown: 60
+  restFallDelay: 0.2
+  dryFireHarmDraw: 0.2
+  shoulderDrop: 0.24
+  shoulderReach: 0.1
+  forearmFollowsBow: 0.5
+  armLength: 0.4
+  armRadius: 0.03
+  elbowOutward: 0.06
+  stringRadius: 0.005
 --- !u!114 &1688477125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8204,6 +8238,20 @@ MonoBehaviour:
   upperLimb: {fileID: 1714810037}
   lowerLimb: {fileID: 1778510433}
   maxFlexDegrees: 8
+  logFailures: 1
+  nockPopLateral: 0.2
+  overdrawGrace: 0.03
+  maxRestCant: 50
+  maxRestPitchDown: 60
+  restFallDelay: 0.2
+  dryFireHarmDraw: 0.2
+  shoulderDrop: 0.24
+  shoulderReach: 0.1
+  forearmFollowsBow: 0.5
+  armLength: 0.4
+  armRadius: 0.03
+  elbowOutward: 0.06
+  stringRadius: 0.005
 --- !u!114 &1795467023
 MonoBehaviour:
   m_ObjectHideFlags: 0
