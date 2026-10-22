@@ -14,7 +14,6 @@ public enum BowFailure
     StringSlap,       // the released string hit the bow arm (harms the archer)
     DryFire,          // the string was let go with no arrow on it (harms the archer)
     ArrowFellOffRest, // the bow was tilted/pointed down too far and the nocked arrow slid off
-    NockPoppedOff,    // the string was pulled sideways and the nock came off it
     Overdraw,         // drawn past the arrow's length: the point passed the rest and the arrow fell off
     BowDropped        // the bow was let go with an arrow on it
 }
@@ -68,7 +67,6 @@ public class Bow : MonoBehaviour
 
     [Header("Failure states")]
     [SerializeField] bool logFailures = true;              // write each failure (and each string release) to the Console
-    [SerializeField] float nockPopLateral = 0.20f;         // string pulled this far sideways/up/down from the arrow's line: the nock pops off the string
     [SerializeField] float overdrawGrace = 0.03f;          // drawn this far past the arrow's limit: the arrow falls off the rest
     [SerializeField] float maxRestCant = 50f;              // degrees of cant (bow rolled sideways) a nocked arrow stays on the rest at
     [SerializeField] float maxRestPitchDown = 60f;         // degrees the bow can point downwards before a nocked arrow slides off
@@ -329,8 +327,6 @@ public class Bow : MonoBehaviour
         // Hand wandered too far from the arrow's line: the string slips off the fingers.
         float lateral = new Vector2(handLocal.x - shelfLocal.x, handLocal.y - shelfLocal.y).magnitude;
         if (lateral > maxLateral) { EndDraw(DrawEnd.Slipped); return; }
-        // Not quite as far, and the string is pulled sideways off the nock: the arrow falls and the draw goes on with a bare string.
-        if (nocked != null && lateral > nockPopLateral && draw > 0.05f) DropNocked(BowFailure.NockPoppedOff);
 
         // The nock follows the hand along the line. It can't go forward of the flat string,
         // and the arrow's tip can't be drawn back past the shelf.
