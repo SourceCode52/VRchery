@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Curls the finger bones procedurally. Reads HandInput on the controller.
 /// Grab mode:       trigger or grip closes the whole hand, and it stays closed while something is held.
-/// StringHook mode: trigger curls index, middle and ring; pinky follows a little; thumb stays open.
+/// StringHook mode: trigger curls index, middle and ring around the string; the pinky tucks into the hand; thumb stays open.
 /// </summary>
 public class HandPoser : MonoBehaviour
 {
@@ -24,7 +24,7 @@ public class HandPoser : MonoBehaviour
     [Header("Poses")]
     [SerializeField, Range(0f, 1f)] float holdCurl = 0.85f;    // fingers stay this closed while holding an object
     [SerializeField, Range(0f, 1f)] float hookCurl = 0.7f;     // string hook: index/middle/ring at full trigger
-    [SerializeField, Range(0f, 1f)] float pinkyHookShare = 0.4f;
+    [SerializeField, Range(0f, 1f)] float pinkyCurl = 0.85f;     // string hook: the pinky curls into the palm (not around the string) at full trigger
 
     Quaternion[] indexRest, middleRest, ringRest, pinkyRest, thumbRest;
     float index, middle, ring, pinky, thumb;
@@ -46,7 +46,7 @@ public class HandPoser : MonoBehaviour
         {
             float hook = input.Trigger * hookCurl;
             tIndex = tMiddle = tRing = hook;
-            tPinky = hook * pinkyHookShare;
+            tPinky = input.Trigger * pinkyCurl;
             tThumb = 0f;
         }
         else

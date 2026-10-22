@@ -43,7 +43,7 @@ public class Quiver : MonoBehaviour
     [SerializeField] float pickRadius = 0.12f;        // hand to the exposed part of an arrow (or any part of one on the ground)
     [SerializeField] float maxExposed = 0.35f;        // longest stretch of arrow considered grabbable above the rim
     [SerializeField] float returnRadius = 0.15f;      // let go this close to the tube mouth: arrow falls back in
-    [SerializeField] Vector3 gripPointInHand = new Vector3(0f, 0f, -0.03f);   // controller space
+    [SerializeField] Vector3 gripPointInHand = new Vector3(-0.044f, -0.038f, -0.045f);   // controller space, right hand: the arrow passes between the thumb and the curled fingers (x is mirrored for the left hand)
     [SerializeField] float pressAt = 0.6f;
     [SerializeField] float releaseAt = 0.4f;
 
@@ -181,7 +181,9 @@ public class Quiver : MonoBehaviour
         bool releasedNow = !down && squeezing;
         squeezing = down;
 
-        Vector3 grip = hand.TransformPoint(gripPointInHand);
+        Vector3 gripLocal = gripPointInHand;
+        if (hands.Current == Handedness.Left) gripLocal.x = -gripLocal.x;
+        Vector3 grip = hand.TransformPoint(gripLocal);
         handVelocity = Vector3.ClampMagnitude((grip - gripPrev) / Mathf.Max(Time.deltaTime, 0.0001f), 6f);
         gripPrev = grip;
 

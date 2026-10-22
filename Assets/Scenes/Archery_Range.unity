@@ -668,7 +668,7 @@ MonoBehaviour:
   pickRadius: 0.12
   maxExposed: 0.35
   returnRadius: 0.18
-  gripPointInHand: {x: 0, y: 0, z: -0.03}
+  gripPointInHand: {x: -0.044, y: -0.01, z: -0.045}
   pressAt: 0.6
   releaseAt: 0.4
 --- !u!1 &238261218
@@ -5174,11 +5174,11 @@ MonoBehaviour:
   - {fileID: 1901899972}
   - {fileID: 499462955}
   fingerCurl: {x: 80, y: 0, z: 0}
-  thumbCurl: {x: 0, y: 0, z: 0}
+  thumbCurl: {x: 8.7, y: -7.7, z: 0}
   smoothing: 15
   holdCurl: 0.85
   hookCurl: 0.7
-  pinkyHookShare: 0.4
+  pinkyCurl: 0.85
 --- !u!1 &1102270706 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1767192433, guid: 8ca5856c0cf6635428ba4717f2f02bb4, type: 3}
@@ -5299,7 +5299,7 @@ MonoBehaviour:
   smoothing: 15
   holdCurl: 0.85
   hookCurl: 0.7
-  pinkyHookShare: 0.4
+  pinkyCurl: 0.85
 --- !u!4 &1153652383 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2984475904588606535, guid: b635de2def43be74c8b16d5475233dc5, type: 3}
