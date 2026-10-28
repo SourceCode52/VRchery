@@ -200,8 +200,7 @@ public class Quiver : MonoBehaviour
         foreach (var bow in Bow.All)
         {
             if (!bow.TryNock(held, hand)) continue;
-            ClearHeld();
-            hi.Haptic(0.5f, 0.08f);
+            ClearHeld();   // (the bow gives the nock pulse itself, on both hands)
             return;
         }
     }

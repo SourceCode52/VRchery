@@ -65,6 +65,13 @@ public class Bow : MonoBehaviour
     [SerializeField] Transform lowerLimb;
     [SerializeField] float maxFlexDegrees = 8f;
 
+    [Header("Haptics")]
+    [SerializeField, Range(0f, 1f)] float nockPulse = 0.5f;          // strength of the short pulse when an arrow clicks onto the string (the nocking hand only)
+    [SerializeField] float nockPulseSeconds = 0.08f;
+    [SerializeField, Range(0f, 1f)] float drawRumbleMin = 0.05f;     // rumble on both controllers as the string starts to move
+    [SerializeField, Range(0f, 1f)] float drawRumbleMax = 0.4f;      // and at full draw
+    [SerializeField] bool rumbleAtFullDraw = true;                   // true: the rumble stays at full strength until the string is let go; false: it stops at full draw
+
     [Header("Failure states")]
     [SerializeField] bool logFailures = true;              // write each failure (and each string release) to the Console
     [SerializeField] float overdrawGrace = 0.03f;          // drawn this far past the arrow's limit: the arrow falls off the rest
@@ -213,6 +220,7 @@ public class Bow : MonoBehaviour
                 BeginDraw(hand, hands.Current);
         }
 
+        if (drawing) DrawRumble(hands);
         UpdateFocus();
         if (range != null) range.ExitBlocked = drawing;                 // can't leave the range mid-draw
     }
@@ -276,7 +284,18 @@ public class Bow : MonoBehaviour
         arrow.SetState(ArrowState.Nocked);
         IgnoreMyColliders(arrow);
         RestArrow(HandednessManager.Instance.Current);
+        HandednessManager.Instance.DrawHandInput.Haptic(nockPulse, nockPulseSeconds);
         return true;
+    }
+
+    // Rumble on both controllers that grows with the draw. Short impulses, renewed every frame, so it stops as soon as the draw does.
+    void DrawRumble(HandednessManager hands)
+    {
+        float tension = Tension;
+        if (!rumbleAtFullDraw && tension >= 0.999f) return;
+        float amplitude = Mathf.Lerp(drawRumbleMin, drawRumbleMax, tension);
+        hands.DrawHandInput.Haptic(amplitude, 0.08f);
+        hands.OffHandInput.Haptic(amplitude, 0.08f);
     }
 
     void IgnoreMyColliders(Arrow arrow)

@@ -1516,7 +1516,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 2.5}
-  m_LocalScale: {x: 1, y: 1, z: 1.7}
+  m_LocalScale: {x: 1.75, y: 1, z: 2.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 834735488}
@@ -2636,8 +2636,8 @@ Transform:
   m_GameObject: {fileID: 753599689}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.001, z: -4.5}
-  m_LocalScale: {x: 10, y: 0.001, z: 3}
+  m_LocalPosition: {x: 0, y: 0.001, z: -4.25}
+  m_LocalScale: {x: 9.5, y: 0.001, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 930741000}
@@ -3465,7 +3465,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.001, z: 0}
-  m_LocalScale: {x: 10, y: 0.001, z: 2}
+  m_LocalScale: {x: 9.5, y: 0.001, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 930741000}
@@ -7668,8 +7668,12 @@ MonoBehaviour:
   upperLimb: {fileID: 1259929887}
   lowerLimb: {fileID: 1714478786}
   maxFlexDegrees: 8
+  nockPulse: 0.5
+  nockPulseSeconds: 0.08
+  drawRumbleMin: 0.05
+  drawRumbleMax: 0.4
+  rumbleAtFullDraw: 1
   logFailures: 1
-  nockPopLateral: 0.2
   overdrawGrace: 0.03
   maxRestCant: 50
   maxRestPitchDown: 60
@@ -8238,8 +8242,12 @@ MonoBehaviour:
   upperLimb: {fileID: 1714810037}
   lowerLimb: {fileID: 1778510433}
   maxFlexDegrees: 8
+  nockPulse: 0.5
+  nockPulseSeconds: 0.08
+  drawRumbleMin: 0.05
+  drawRumbleMax: 0.4
+  rumbleAtFullDraw: 1
   logFailures: 1
-  nockPopLateral: 0.2
   overdrawGrace: 0.03
   maxRestCant: 50
   maxRestPitchDown: 60
@@ -9024,7 +9032,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.001, z: -2}
-  m_LocalScale: {x: 10, y: 0.001, z: 2}
+  m_LocalScale: {x: 9.5, y: 0.001, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 930741000}
