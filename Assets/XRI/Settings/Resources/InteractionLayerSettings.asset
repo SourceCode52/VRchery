@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.XR.Interaction.Toolkit::UnityEngine.XR.Interaction.Toolkit.InteractionLayerSettings
   m_LayerNames:
   - Default
-  - upper_limb
-  - lower_limb
-  - stabiliser
-  - sight
-  - riser
   - 
   - 
   - 
   - 
   - 
-  - 
+  - Riser
+  - LimbUpper
+  - LimbLower
+  - Sight
+  - Stabiliser
+  - String
   - 
   - 
   - 
