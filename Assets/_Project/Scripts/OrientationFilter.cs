@@ -6,7 +6,10 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 public class OrientationFilter : MonoBehaviour, IXRSelectFilter
 {
+    [Tooltip("The socket's attach transform.")]
     public Transform target;          // the socket's attach transform
+    
+    [Tooltip("Angle off for connection.")]
     public float maxAngle = 25f;
 
     public bool canProcess => isActiveAndEnabled;
