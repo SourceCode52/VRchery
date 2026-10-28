@@ -11,8 +11,8 @@ using UnityEngine;
 /// Bring its nock to the string's nocking point (on a bow held in the other hand) and it snaps on.
 /// Let go over the tube mouth and it falls back in; let go anywhere else and it drops.
 /// An arrow lying on the ground can be picked up again the same way (anywhere along the shaft).
-/// Any arrow left lying around (dropped, or knocked out of the tube) drops back into the tube after a few seconds,
-/// and a few seconds after the last arrow has gone, every arrow does.
+/// Nothing comes back by itself: arrows that are dropped, missed or shot stay where they are until the ARROWS button
+/// on the table calls ResetAll, which drops every arrow back into the tube.
 /// The tube is hidden outside the shooting state.
 /// </summary>
 [DefaultExecutionOrder(20)]   // after HandInput (10), so this frame's grip/trigger values are current
@@ -26,8 +26,6 @@ public class Quiver : MonoBehaviour
     [SerializeField] Arrow arrowPrefab;
     [SerializeField] int arrowCount = 3;
     [SerializeField] float arrowLength = 0.8128f;
-    [SerializeField] float returnDelay = 5f;          // seconds after the last arrow is gone, then all of them drop back in
-    [SerializeField] float looseReturnDelay = 5f;     // an arrow lying around outside the tube drops back in after this long
 
     [Header("Tube (built by the QuiverTube component on it)")]
     [SerializeField] Transform tube;
@@ -47,11 +45,8 @@ public class Quiver : MonoBehaviour
     [SerializeField] float pressAt = 0.6f;
     [SerializeField] float releaseAt = 0.4f;
 
-    public event Action RoundEnded;                   // all arrows shot; fires just before they drop back in
-
     public bool Holding => held != null;
     public int ArrowsLeft => arrows == null ? 0 : CountAvailable();
-    public float RefillIn => refillTimer;             // seconds until the arrows come back, or -1
 
     Arrow[] arrows;
     QuiverTube shape;
@@ -62,7 +57,7 @@ public class Quiver : MonoBehaviour
     Vector3 heldPos;
     Quaternion heldRot = Quaternion.identity;
     Phase phase = Phase.Hidden;
-    float phaseTime, refillTimer = -1f;
+    float phaseTime;
     bool squeezing;
     Vector3 gripPrev, handVelocity;
 
@@ -117,7 +112,6 @@ public class Quiver : MonoBehaviour
     void OnStateChanged(RangeState state)
     {
         ClearHeld();
-        refillTimer = -1f;
         pending.Clear();
         foreach (var a in arrows) Park(a);          // hidden and idle until the tube is up
         tube.gameObject.SetActive(false);
@@ -163,7 +157,6 @@ public class Quiver : MonoBehaviour
                 FeedPending();
                 HandleHand();
                 WatchArrows();
-                HandleRound();
                 break;
         }
     }
@@ -285,40 +278,17 @@ public class Quiver : MonoBehaviour
                 float outside = new Vector2(tip.x - axis.x, tip.z - axis.z).magnitude;
                 if (outside > OuterRadius + 0.03f || tip.y < axis.y - 1f) a.MarkLoose();
             }
-            else if (a.State == ArrowState.Dropped)
-            {
-                a.LooseTime += Time.deltaTime;
-                if (a.LooseTime >= looseReturnDelay) Enqueue(a);   // nobody picked it up: it goes back in the tube
-            }
         }
     }
 
-    // ---------------------------------------------------------------- the round
-    void HandleRound()
-    {
-        if (refillTimer < 0f)
-        {
-            if (CountAvailable() == 0) refillTimer = returnDelay;   // nothing left to shoot
-            return;
-        }
-
-        refillTimer -= Time.deltaTime;
-        if (refillTimer <= 0f)
-        {
-            Debug.Log("Quiver: round over - the arrows are dropping back into the tube.");
-            RoundEnded?.Invoke();
-            ResetAll();
-        }
-    }
-
-    /// <summary>Every arrow that is not already in the tube drops back in.</summary>
+    // ---------------------------------------------------------------- bringing the arrows back (by hand: the ARROWS button)
+    /// <summary>Every arrow that is not already in the tube drops back in. The ARROWS button calls this.</summary>
     public void ResetAll()
     {
         if (arrows == null) return;
         ClearHeld();
         foreach (var a in arrows)
             if (a.State != ArrowState.InQuiver || !a.gameObject.activeSelf) Enqueue(a);
-        refillTimer = -1f;
     }
 
     /// <summary>Put one arrow back into the tube (used by the bow and the arrow's own clean-up).</summary>

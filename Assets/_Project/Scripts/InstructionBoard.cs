@@ -203,7 +203,7 @@ public class InstructionBoard : MonoBehaviour
             new BoardSlide { step = GuideStep.Firing, label = "STEP 4 OF 4", title = "Release",
                 body = "When you are ready, let go of the trigger to loose the arrow." },
             new BoardSlide { step = GuideStep.RoundComplete, label = "ROUND COMPLETE", title = "That is all your arrows",
-                body = "They return to the tube in a moment. Shoot another round, or press EXIT to leave the line." },
+                body = "Press the ARROWS button on the table to bring them back to the tube. Shoot another round, or press EXIT to leave the line." },
         };
     }
 }

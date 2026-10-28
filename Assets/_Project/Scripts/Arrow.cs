@@ -94,7 +94,7 @@ public class Arrow : MonoBehaviour
         rb.linearVelocity = velocity;
         rb.angularVelocity = Vector3.zero;
         flying = true;
-        Invoke(nameof(Cleanup), missLifetime);   // a miss is put away after a while
+        if (Owner == null) Invoke(nameof(Cleanup), missLifetime);   // a miss is put away after a while (with a quiver it stays until the ARROWS button brings it back)
     }
 
     /// <summary>Let go of the arrow: it falls.</summary>
