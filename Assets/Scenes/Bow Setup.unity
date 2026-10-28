@@ -3219,8 +3219,6 @@ GameObject:
   - component: {fileID: 736945074}
   - component: {fileID: 736945077}
   - component: {fileID: 736945076}
-  - component: {fileID: 736945075}
-  - component: {fileID: 736945078}
   m_Layer: 0
   m_Name: LimbSocket_Upper
   m_TagString: Untagged
@@ -3242,21 +3240,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1370070261}
+  - {fileID: 2038412916}
   m_Father: {fileID: 1349141290}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &736945075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736945073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b91469103dcd6a543abb062045332ac7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
-  maxAngle: 45
 --- !u!65 &736945076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3314,7 +3300,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_StartingHoverFilters: []
-  m_StartingSelectFilters: []
+  m_StartingSelectFilters:
+  - {fileID: 2038412917}
   m_ShowInteractableHoverMeshes: 1
   m_InteractableHoverMeshMaterial: {fileID: 0}
   m_InteractableCantHoverMeshMaterial: {fileID: 0}
@@ -3326,20 +3313,6 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
---- !u!114 &736945078
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 736945073}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb65bb0869e32504aa8f68ccb44c8e94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LockingSocket
-  assembly: {fileID: 1058822236}
-  correctPart: {fileID: 1575241045}
 --- !u!1 &761687901
 GameObject:
   m_ObjectHideFlags: 0
@@ -5966,6 +5939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b91469103dcd6a543abb062045332ac7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  target: {fileID: 0}
   maxAngle: 45
 --- !u!65 &1492502677
 BoxCollider:
@@ -6049,7 +6023,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockingSocket
   assembly: {fileID: 1058822236}
-  correctPart: {fileID: 1317161179}
+  lockParent: {fileID: 0}
 --- !u!1 &1496946243
 GameObject:
   m_ObjectHideFlags: 0
@@ -8041,6 +8015,52 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4123993, y: 0.037642434, z: 0.042609975}
   m_Center: {x: 0.12521684, y: -0.052244417, z: 0.24518973}
+--- !u!1 &2038412915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2038412916}
+  - component: {fileID: 2038412917}
+  m_Layer: 0
+  m_Name: OrientationScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2038412916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038412915}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 736945074}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2038412917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038412915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91469103dcd6a543abb062045332ac7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::OrientationFilter
+  target: {fileID: 0}
+  maxAngle: 45
 --- !u!1 &2044004123
 GameObject:
   m_ObjectHideFlags: 0

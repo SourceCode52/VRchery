@@ -1,30 +1,18 @@
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Filtering;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
+// XRI 3.x only (delete these two lines on XRI 2.x):
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
-[RequireComponent(typeof(XRSocketInteractor))]
-public class OrientationFilter : MonoBehaviour, IXRSelectFilter, IXRHoverFilter
+public class OrientationFilter : MonoBehaviour, IXRSelectFilter
 {
-    [SerializeField] float maxAngle = 25f;
-    XRSocketInteractor socket;
+    public Transform target;          // the socket's attach transform
+    public float maxAngle = 25f;
 
     public bool canProcess => isActiveAndEnabled;
 
-    void Awake()
+    public bool Process(IXRSelectInteractor interactor, IXRSelectInteractable interactable)
     {
-        socket = GetComponent<XRSocketInteractor>();
-        socket.selectFilters.Add(this);
-        socket.hoverFilters.Add(this);
-    }
-
-    public bool Process(IXRSelectInteractor interactor, IXRSelectInteractable interactable) => IsAligned(interactor, interactable);
-    public bool Process(IXRHoverInteractor interactor, IXRHoverInteractable interactable) => IsAligned(interactor, interactable);
-
-    bool IsAligned(IXRInteractor interactor, IXRInteractable interactable)
-    {
-        var partAttach = interactable.GetAttachTransform(interactor);
-        var socketAttach = socket.GetAttachTransform(interactable);
-        return Quaternion.Angle(partAttach.rotation, socketAttach.rotation) <= maxAngle;
+        return Quaternion.Angle(interactable.transform.rotation, target.rotation) <= maxAngle;
     }
 }

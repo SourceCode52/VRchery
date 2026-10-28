@@ -3,23 +3,39 @@ using UnityEngine;
 
 public class BowAssembly : MonoBehaviour
 {
-    public int totalParts = 6;           // riser, upperLimb, lowerLimb, sight, stabilisers, string
-    public GameObject[] partsToHide = [];     // the individual parts
-    public GameObject assembledBow;      // inactive in the scene at start
+    [Tooltip("How many parts must be snapped in before the swap")]
+    public int totalParts = 6;
 
-    readonly HashSet<LockingSocket> snapped = new();
+    [Tooltip("The individual loose parts to hide on completion")]
+    public GameObject[] partsToHide;
 
-    public void RegisterSnapped(LockingSocket socket)
+    [Tooltip("The finished bow model. Leave inactive in the scene.")]
+    public GameObject assembledBow;
+
+    private HashSet<object> snapped = new HashSet<object>();
+
+    // Called by each LockingSocket when its part is locked in
+    public void RegisterSnapped(object source)
     {
-        snapped.Add(socket);   // HashSet prevents double counting
-        if (snapped.Count >= totalParts) Complete();
+        snapped.Add(source); // a HashSet ignores duplicates
+        Debug.Log("Snapped " + snapped.Count + " / " + totalParts);
+
+        if (snapped.Count >= totalParts)
+            Complete();
     }
 
-    void Complete()
+    private void Complete()
     {
-        assembledBow.transform.SetPositionAndRotation(
-            transform.position, transform.rotation);
-        foreach (var p in partsToHide) p.SetActive(false);
-        assembledBow.SetActive(true);
+        if (assembledBow != null)
+        {
+            assembledBow.transform.SetPositionAndRotation(
+                transform.position, transform.rotation);
+            assembledBow.SetActive(true);
+        }
+
+        foreach (GameObject part in partsToHide)
+        {
+            if (part != null) part.SetActive(false);
+        }
     }
 }
