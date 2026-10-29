@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BowAssembly : MonoBehaviour
 {
@@ -9,10 +10,15 @@ public class BowAssembly : MonoBehaviour
     [Tooltip("The individual loose parts to hide on completion")]
     public GameObject[] partsToHide;
 
-    [Tooltip("The finished bow model. Leave inactive in the scene.")]
+    [Tooltip("Optional. A finished bow model to show on completion. Leave inactive in the scene. " +
+             "Not needed when On Complete swaps in the shooting bow instead.")]
     public GameObject assembledBow;
 
+    [Tooltip("Called once, after the loose parts have been hidden (for example to bring in the shooting bow).")]
+    public UnityEvent onComplete;
+
     private HashSet<object> snapped = new HashSet<object>();
+    private bool completed;
 
     // Called by each LockingSocket when its part is locked in
     public void RegisterSnapped(object source)
@@ -26,6 +32,9 @@ public class BowAssembly : MonoBehaviour
 
     private void Complete()
     {
+        if (completed) return;
+        completed = true;
+
         if (assembledBow != null)
         {
             assembledBow.transform.SetPositionAndRotation(
@@ -37,5 +46,7 @@ public class BowAssembly : MonoBehaviour
         {
             if (part != null) part.SetActive(false);
         }
+
+        onComplete?.Invoke();
     }
 }
