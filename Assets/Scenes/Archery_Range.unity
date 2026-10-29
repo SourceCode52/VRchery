@@ -163,7 +163,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23850728}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b91469103dcd6a543abb062045332ac7, type: 3}
   m_Name: 
@@ -598,13 +598,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 84247930}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb65bb0869e32504aa8f68ccb44c8e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockingSocket
   assembly: {fileID: 1451585275}
   lockParent: {fileID: 0}
+  settlePosition: 0.003
+  settleAngle: 1.5
+  settleTimeout: 2
 --- !u!65 &84247933
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1733,13 +1736,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233728364}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb65bb0869e32504aa8f68ccb44c8e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockingSocket
   assembly: {fileID: 1451585275}
   lockParent: {fileID: 0}
+  settlePosition: 0.003
+  settleAngle: 1.5
+  settleTimeout: 2
 --- !u!65 &233728367
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5934,13 +5940,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 797302453}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb65bb0869e32504aa8f68ccb44c8e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockingSocket
   assembly: {fileID: 1451585275}
   lockParent: {fileID: 0}
+  settlePosition: 0.003
+  settleAngle: 1.5
+  settleTimeout: 2
 --- !u!65 &797302456
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7066,7 +7075,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886490222}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b91469103dcd6a543abb062045332ac7, type: 3}
   m_Name: 
@@ -8225,7 +8234,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1011581060}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b91469103dcd6a543abb062045332ac7, type: 3}
   m_Name: 
@@ -9460,13 +9469,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108354211}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb65bb0869e32504aa8f68ccb44c8e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockingSocket
   assembly: {fileID: 1451585275}
   lockParent: {fileID: 0}
+  settlePosition: 0.003
+  settleAngle: 1.5
+  settleTimeout: 2
 --- !u!65 &1108354214
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10416,7 +10428,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189231473}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b91469103dcd6a543abb062045332ac7, type: 3}
   m_Name: 
@@ -15909,7 +15921,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885418645}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b91469103dcd6a543abb062045332ac7, type: 3}
   m_Name: 
@@ -17022,13 +17034,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1998635797}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb65bb0869e32504aa8f68ccb44c8e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockingSocket
   assembly: {fileID: 1451585275}
   lockParent: {fileID: 0}
+  settlePosition: 0.003
+  settleAngle: 1.5
+  settleTimeout: 2
 --- !u!65 &1998635800
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17230,13 +17245,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2019528480}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb65bb0869e32504aa8f68ccb44c8e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LockingSocket
   assembly: {fileID: 1451585275}
   lockParent: {fileID: 0}
+  settlePosition: 0.003
+  settleAngle: 1.5
+  settleTimeout: 2
 --- !u!65 &2019528483
 BoxCollider:
   m_ObjectHideFlags: 0
