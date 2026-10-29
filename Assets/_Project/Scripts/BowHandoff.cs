@@ -61,5 +61,7 @@ public class BowHandoff : MonoBehaviour
 
         shootingBow.SetActive(true);
         if (park != null) park.Park();
+
+        RangeAudio.Play(RangeAudio.Cue.BowBuilt, position);   // the finished bow
     }
 }

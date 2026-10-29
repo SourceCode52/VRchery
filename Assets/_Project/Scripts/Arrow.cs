@@ -27,6 +27,9 @@ public class Arrow : MonoBehaviour
     public float LooseTime { get; set; }                                 // seconds spent lying around after being dropped (the Quiver counts it)
     public Vector3 TipPosition => tip.position;
 
+    /// <summary>A shot arrow has hit something for the first time: the arrow, whether it hit the target (or an arrow already in it), and where. Used for sound.</summary>
+    public static event System.Action<Arrow, bool, Vector3> Landed;
+
     Rigidbody rb;
     Collider col;
     float flightLinearDamping, flightAngularDamping;
@@ -126,6 +129,11 @@ public class Arrow : MonoBehaviour
     {
         if (!flying) return;
         flying = false;
+
+        bool onTarget = c.collider.GetComponentInParent<ArrowTarget>() != null;
+        var other = c.collider.GetComponentInParent<Arrow>();
+        if (other != null && other != this && other.Stuck) onTarget = true;   // landed on an arrow already in the target
+        Landed?.Invoke(this, onTarget, c.GetContact(0).point);
 
         bool sticks = c.collider.GetComponentInParent<ArrowTarget>() != null
                    || c.collider.GetComponentInParent<ArrowStickSurface>() != null;

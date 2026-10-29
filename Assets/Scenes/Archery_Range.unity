@@ -567,6 +567,7 @@ GameObject:
   - component: {fileID: 84247934}
   - component: {fileID: 84247933}
   - component: {fileID: 84247932}
+  - component: {fileID: 84247935}
   m_Layer: 0
   m_Name: StringSocket
   m_TagString: Untagged
@@ -678,6 +679,19 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+--- !u!114 &84247935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 84247930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b185530428dce04ba3b3143a15ac17b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocketSound
+  cue: 2
 --- !u!1 &97131570
 GameObject:
   m_ObjectHideFlags: 0
@@ -906,6 +920,7 @@ GameObject:
   - component: {fileID: 101032200}
   - component: {fileID: 101032199}
   - component: {fileID: 101032198}
+  - component: {fileID: 101032201}
   m_Layer: 0
   m_Name: Sight
   m_TagString: Untagged
@@ -1105,6 +1120,22 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &101032201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101032196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
+  minImpactSpeed: 0.8
+  fullVolumeSpeed: 4
+  quietAtStart: 2
+  cooldown: 0.15
 --- !u!1 &101669830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,6 +1739,7 @@ GameObject:
   - component: {fileID: 233728368}
   - component: {fileID: 233728367}
   - component: {fileID: 233728366}
+  - component: {fileID: 233728369}
   m_Layer: 0
   m_Name: StabiliserSocket
   m_TagString: Untagged
@@ -1819,6 +1851,19 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+--- !u!114 &233728369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233728364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b185530428dce04ba3b3143a15ac17b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocketSound
+  cue: 1
 --- !u!1 &238261218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,6 +1988,7 @@ GameObject:
   - component: {fileID: 249979880}
   - component: {fileID: 249979879}
   - component: {fileID: 249979878}
+  - component: {fileID: 249979881}
   m_Layer: 0
   m_Name: LimbLower
   m_TagString: Untagged
@@ -2142,6 +2188,22 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &249979881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249979876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
+  minImpactSpeed: 0.8
+  fullVolumeSpeed: 4
+  quietAtStart: 2
+  cooldown: 0.15
 --- !u!1 &267499902
 GameObject:
   m_ObjectHideFlags: 0
@@ -5915,6 +5977,7 @@ GameObject:
   - component: {fileID: 797302457}
   - component: {fileID: 797302456}
   - component: {fileID: 797302455}
+  - component: {fileID: 797302458}
   m_Layer: 0
   m_Name: LimbSocket_Upper
   m_TagString: Untagged
@@ -6026,6 +6089,19 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+--- !u!114 &797302458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797302453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b185530428dce04ba3b3143a15ac17b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocketSound
+  cue: 0
 --- !u!1 &801085879
 GameObject:
   m_ObjectHideFlags: 0
@@ -8363,6 +8439,124 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1012727036}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1018191761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1018191763}
+  - component: {fileID: 1018191762}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1018191762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018191761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727855c648d13d847b4182464fb8473f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RangeAudio
+  sounds:
+  - cue: 0
+    clip: {fileID: 8300000, guid: 006472656c2f87440a61ab057203e709, type: 3}
+    volume: 0.85
+    pitchVariation: 0.04
+    positional: 1
+  - cue: 1
+    clip: {fileID: 8300000, guid: 8b774531f874e1343ab7393c8e29a149, type: 3}
+    volume: 0.85
+    pitchVariation: 0.04
+    positional: 1
+  - cue: 2
+    clip: {fileID: 8300000, guid: 0b128879eacfc0d419ee28c9d5f86319, type: 3}
+    volume: 0.7
+    pitchVariation: 0.04
+    positional: 1
+  - cue: 3
+    clip: {fileID: 8300000, guid: 0dc4c8ac95a2fd840a3bb335a90534c1, type: 3}
+    volume: 0.7
+    pitchVariation: 0.04
+    positional: 1
+  - cue: 4
+    clip: {fileID: 8300000, guid: 697360a9f3d1f3c4d99b47f768b9509f, type: 3}
+    volume: 0.55
+    pitchVariation: 0.04
+    positional: 1
+  - cue: 5
+    clip: {fileID: 8300000, guid: 6277bd0f058163e42a4ed39c38d0a6c4, type: 3}
+    volume: 0.75
+    pitchVariation: 0.04
+    positional: 1
+  - cue: 6
+    clip: {fileID: 8300000, guid: 2c2b5916752221745907e52f05e39e00, type: 3}
+    volume: 0.6
+    pitchVariation: 0.04
+    positional: 1
+  - cue: 7
+    clip: {fileID: 8300000, guid: 90eb57d6a67840546ad0c050d2bed0a0, type: 3}
+    volume: 0.7
+    pitchVariation: 0.04
+    positional: 1
+  - cue: 8
+    clip: {fileID: 8300000, guid: 77c37134314b2674d817484ab72abb9d, type: 3}
+    volume: 0.9
+    pitchVariation: 0.04
+    positional: 1
+  - cue: 9
+    clip: {fileID: 8300000, guid: dc04ca609ab595d47888892db250a1fb, type: 3}
+    volume: 0.65
+    pitchVariation: 0.04
+    positional: 0
+  - cue: 10
+    clip: {fileID: 8300000, guid: b8aeb0c8506b5ab4da981b5e2778dfe2, type: 3}
+    volume: 0.7
+    pitchVariation: 0.04
+    positional: 0
+  - cue: 11
+    clip: {fileID: 8300000, guid: 1f9a8fd504f2ec44192be9a174c4e18e, type: 3}
+    volume: 0.8
+    pitchVariation: 0.04
+    positional: 0
+  - cue: 12
+    clip: {fileID: 8300000, guid: b9c7db6ec32d268499cf0a8eb2d56cd6, type: 3}
+    volume: 0.65
+    pitchVariation: 0.04
+    positional: 1
+  voices: 12
+  minDistance: 1.5
+  maxDistance: 30
+  teleportationProvider: {fileID: 0}
+  whooshDelay: 0.03
+  drawMinSpeed: 0.25
+  minShotDraw: 0.08
+  logPlays: 0
+--- !u!4 &1018191763
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1018191761}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1023749163 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1717954561962503725, guid: 8ca5856c0cf6635428ba4717f2f02bb4, type: 3}
@@ -8888,6 +9082,7 @@ GameObject:
   - component: {fileID: 1086389563}
   - component: {fileID: 1086389562}
   - component: {fileID: 1086389561}
+  - component: {fileID: 1086389564}
   m_Layer: 0
   m_Name: Riser
   m_TagString: Untagged
@@ -9092,6 +9287,22 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1086389564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086389559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
+  minImpactSpeed: 0.8
+  fullVolumeSpeed: 4
+  quietAtStart: 2
+  cooldown: 0.15
 --- !u!1 &1092077404
 GameObject:
   m_ObjectHideFlags: 0
@@ -9450,6 +9661,7 @@ GameObject:
   - component: {fileID: 1108354215}
   - component: {fileID: 1108354214}
   - component: {fileID: 1108354213}
+  - component: {fileID: 1108354216}
   m_Layer: 0
   m_Name: SightSocket
   m_TagString: Untagged
@@ -9561,6 +9773,19 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+--- !u!114 &1108354216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108354211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b185530428dce04ba3b3143a15ac17b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocketSound
+  cue: 1
 --- !u!1 &1108532967
 GameObject:
   m_ObjectHideFlags: 0
@@ -15056,6 +15281,7 @@ GameObject:
   - component: {fileID: 1813506188}
   - component: {fileID: 1813506187}
   - component: {fileID: 1813506186}
+  - component: {fileID: 1813506189}
   m_Layer: 0
   m_Name: 'LimbUpper '
   m_TagString: Untagged
@@ -15255,6 +15481,22 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
+--- !u!114 &1813506189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813506184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
+  minImpactSpeed: 0.8
+  fullVolumeSpeed: 4
+  quietAtStart: 2
+  cooldown: 0.15
 --- !u!1 &1835183122
 GameObject:
   m_ObjectHideFlags: 0
@@ -16461,6 +16703,7 @@ GameObject:
   - component: {fileID: 1959640596}
   - component: {fileID: 1959640595}
   - component: {fileID: 1959640594}
+  - component: {fileID: 1959640597}
   m_Layer: 0
   m_Name: Stabiliser
   m_TagString: Untagged
@@ -16664,6 +16907,22 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1959640597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959640592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
+  minImpactSpeed: 0.8
+  fullVolumeSpeed: 4
+  quietAtStart: 2
+  cooldown: 0.15
 --- !u!1 &1971776960
 GameObject:
   m_ObjectHideFlags: 0
@@ -17054,6 +17313,7 @@ GameObject:
   - component: {fileID: 1998635801}
   - component: {fileID: 1998635800}
   - component: {fileID: 1998635799}
+  - component: {fileID: 1998635802}
   m_Layer: 0
   m_Name: LimbSocket_Lower
   m_TagString: Untagged
@@ -17165,6 +17425,19 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+--- !u!114 &1998635802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998635797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b185530428dce04ba3b3143a15ac17b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocketSound
+  cue: 0
 --- !u!1 &1998653321
 GameObject:
   m_ObjectHideFlags: 0
@@ -17267,6 +17540,7 @@ GameObject:
   - component: {fileID: 2019528484}
   - component: {fileID: 2019528483}
   - component: {fileID: 2019528482}
+  - component: {fileID: 2019528485}
   m_Layer: 0
   m_Name: standSocket
   m_TagString: Untagged
@@ -17375,6 +17649,19 @@ MonoBehaviour:
   m_SocketScaleMode: 0
   m_FixedScale: {x: 1, y: 1, z: 1}
   m_TargetBoundsSize: {x: 1, y: 1, z: 1}
+--- !u!114 &2019528485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019528480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b185530428dce04ba3b3143a15ac17b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SocketSound
+  cue: 1
 --- !u!4 &2021502219 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5147039633493205010, guid: b635de2def43be74c8b16d5475233dc5, type: 3}
@@ -17685,6 +17972,7 @@ GameObject:
   - component: {fileID: 2080059228}
   - component: {fileID: 2080059227}
   - component: {fileID: 2080059226}
+  - component: {fileID: 2080059229}
   m_Layer: 0
   m_Name: String
   m_TagString: Untagged
@@ -17886,6 +18174,22 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2080059229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080059224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
+  minImpactSpeed: 0.8
+  fullVolumeSpeed: 4
+  quietAtStart: 2
+  cooldown: 0.15
 --- !u!1 &2103483587
 GameObject:
   m_ObjectHideFlags: 0
@@ -19106,3 +19410,4 @@ SceneRoots:
   - {fileID: 1101235386}
   - {fileID: 1238832709}
   - {fileID: 328237438}
+  - {fileID: 1018191763}
