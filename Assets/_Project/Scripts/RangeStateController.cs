@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
@@ -14,6 +16,12 @@ public class RangeStateController : MonoBehaviour
     [SerializeField] Transform returnSpot;
     [SerializeField] float cooldown = 1f;
 
+    [Header("Going to the shooting line needs the bow in the bow hand")]
+    [Tooltip("The label on the START button. It shows the hint below for a moment when START is pressed without the bow.")]
+    [SerializeField] TMP_Text startLabel;
+    [SerializeField] string needBowText = "HOLD BOW";
+    [SerializeField] float needBowSeconds = 2.5f;
+
     [Header("Shooting stance - extra yaw added to the Shooting Spot's rotation, per shooting hand")]
     [SerializeField] float rightHandedYaw = 140f;
     [SerializeField] float leftHandedYaw = -140f;
@@ -23,10 +31,23 @@ public class RangeStateController : MonoBehaviour
     public event Action<RangeState> StateChanged;
 
     float nextAllowedTime;
+    string startLabelNormal;
+    Coroutine hint;
+
+    /// <summary>True while a bow is held in the hand that does not draw (the right way round for shooting).</summary>
+    public bool HoldingBow
+    {
+        get
+        {
+            foreach (var bow in Bow.All) if (bow.HeldByOffHand) return true;
+            return false;
+        }
+    }
 
     void Awake()
     {
         Instance = this;
+        if (startLabel != null) startLabelNormal = startLabel.text;
         // The stock teleport turns the player so the camera's forward vector, flattened onto the floor, matches the
         // destination. When the player is looking down at a button that flattened vector is unreliable, so the
         // heading they arrive with depended on how they happened to be standing/looking. Use a steadier heading.
@@ -36,7 +57,25 @@ public class RangeStateController : MonoBehaviour
     public void EnterShooting()
     {
         if (State == RangeState.Shooting || Time.time < nextAllowedTime) return;
+        if (!HoldingBow) { NeedBow(); return; }       // no bow in the bow hand: stay where you are
         SwitchTo(RangeState.Shooting, shootingSpot);
+    }
+
+    // START was pressed without the bow: the failure chord and a hint on the button
+    void NeedBow()
+    {
+        RangeAudio.Play(RangeAudio.Cue.Miss, startLabel != null ? startLabel.transform.position : transform.position);
+        if (startLabel == null) return;
+        if (hint != null) StopCoroutine(hint);
+        hint = StartCoroutine(ShowHint());
+    }
+
+    IEnumerator ShowHint()
+    {
+        startLabel.text = needBowText;
+        yield return new WaitForSeconds(needBowSeconds);
+        startLabel.text = startLabelNormal;
+        hint = null;
     }
 
     public void ExitShooting()

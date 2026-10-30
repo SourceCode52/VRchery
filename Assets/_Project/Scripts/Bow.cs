@@ -6,7 +6,7 @@ using UnityEngine;
 /// limited only by the arrow: the tip can't be drawn back past the shelf.
 /// An arrow is nocked by bringing it (from the Quiver) to the nocking point of a bow held in the other hand;
 /// it then lies on the shelf (above the grip) and slides along a fixed line parallel to the bow's forward axis.
-/// Drawing uses the TRIGGER of the drawing hand (index, middle, ring hook the string).
+/// Drawing uses the TRIGGER or the GRIP of the drawing hand (index, middle, ring hook the string).
 /// </summary>
 /// <summary>Things that go wrong while shooting (see Bow.Failed).</summary>
 public enum BowFailure
@@ -182,7 +182,7 @@ public class Bow : MonoBehaviour
         // someone else (the quiver refilling) took the arrow away: a draw in progress carries on with a bare string
         if (nocked != null && nocked.State != ArrowState.Nocked) nocked = null;
 
-        bool triggerDown = handInput.Trigger > (drawing ? triggerOff : triggerOn);   // hysteresis
+        bool triggerDown = handInput.Squeeze > (drawing ? triggerOff : triggerOn);   // grip or trigger, with hysteresis
         bool squeezed = triggerDown && !wasTriggerDown;
         wasTriggerDown = triggerDown;
 

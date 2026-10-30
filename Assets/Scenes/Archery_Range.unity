@@ -3419,6 +3419,10 @@ PrefabInstance:
       propertyPath: m_EnableFarCasting
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1883230248363655243, guid: 8ca5856c0cf6635428ba4717f2f02bb4, type: 3}
+      propertyPath: m_SelectActionTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2141651114331267770, guid: 8ca5856c0cf6635428ba4717f2f02bb4, type: 3}
       propertyPath: m_PokeWidth
       value: 0.012
@@ -3537,6 +3541,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8877177980677234388, guid: 8ca5856c0cf6635428ba4717f2f02bb4, type: 3}
       propertyPath: m_EnableFarCasting
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8877177980677234388, guid: 8ca5856c0cf6635428ba4717f2f02bb4, type: 3}
+      propertyPath: m_SelectActionTrigger
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9173983156334026967, guid: 8ca5856c0cf6635428ba4717f2f02bb4, type: 3}
@@ -6844,7 +6852,7 @@ MonoBehaviour:
     m_ObjectReferenceObject: {fileID: 0}
     m_ManualValue: 0
   grabInteractor: {fileID: 132500228}
-  toggleHold: 1
+  toggleHold: 0
   pressAt: 0.6
   releaseAt: 0.4
 --- !u!114 &790920834
@@ -9660,7 +9668,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pick up the riser, hold it over the stand platform and lower it down. It clicks in and stays there.
+  m_text: Pick up the riser and hold it over the stand platform in the right position. Let go and it locks into place.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -14168,6 +14176,9 @@ MonoBehaviour:
   shootingSpot: {fileID: 669049099}
   returnSpot: {fileID: 1388977462}
   cooldown: 1
+  startLabel: {fileID: 1410248269}
+  needBowText: HOLD BOW
+  needBowSeconds: 2.5
   rightHandedYaw: 140
   leftHandedYaw: -140
 --- !u!1 &1426611561
@@ -16279,7 +16290,7 @@ MonoBehaviour:
     m_ObjectReferenceObject: {fileID: 0}
     m_ManualValue: 0
   grabInteractor: {fileID: 129623730}
-  toggleHold: 1
+  toggleHold: 0
   pressAt: 0.6
   releaseAt: 0.4
 --- !u!114 &1650193189
@@ -21589,33 +21600,33 @@ MonoBehaviour:
     fitText: 
   riserLabel: STEP 1
   riserTitle: Place the riser on the stand
-  riserBody: Pick up the riser, hold it over the stand platform and lower it down. It clicks in and stays there.
+  riserBody: Pick up the riser and hold it over the stand platform in the right position. Let go and it locks into place.
   parts:
   - name: Upper limb
     part: {fileID: 1813506187}
     socket: {fileID: 797302455}
     fitTitle: 
-    fitText: Fit it onto the upper end of the riser, above the grip. Line it up with the pocket and push it in until it clicks.
+    fitText: Hold it against the upper end of the riser, above the grip, lined up with the pocket. Let go and it locks in.
   - name: Lower limb
     part: {fileID: 249979879}
     socket: {fileID: 1998635799}
     fitTitle: 
-    fitText: Fit it onto the lower end of the riser, below the grip. Line it up with the pocket and push it in until it clicks.
+    fitText: Hold it against the lower end of the riser, below the grip, lined up with the pocket. Let go and it locks in.
   - name: Sight
     part: {fileID: 101032199}
     socket: {fileID: 1108354213}
     fitTitle: 
-    fitText: Push it onto the sight mount just above the grip, holding it the right way up, until it clicks.
+    fitText: Hold it against the sight mount just above the grip, the right way up. Let go and it locks in.
   - name: Stabiliser
     part: {fileID: 1959640595}
     socket: {fileID: 233728366}
     fitTitle: 
-    fitText: Line its connector up with the mount just below the grip and push it in until it clicks.
+    fitText: Hold its connector against the mount just below the grip, lined up. Let go and it locks in.
   - name: String
     part: {fileID: 2080059227}
     socket: {fileID: 84247932}
     fitTitle: 
-    fitText: Hold it against the front of the riser, with the loops over the limb tips, until it clicks. Easiest once both limbs are on.
+    fitText: Hold it against the front of the riser, loops over the limb tips. Let go and it locks in. Easiest once both limbs are on.
   grabTitle: Grab another part
   grabBody: 'Pick up any part from the tables. The order does not matter.
 

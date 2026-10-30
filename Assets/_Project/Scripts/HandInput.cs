@@ -11,8 +11,9 @@ public enum HandMode
 /// <summary>
 /// One per controller (put it on the Left/Right Controller object).
 /// Reads grip + trigger once, decides what the hand is doing, and feeds the Near-Far Interactor's
-/// select input so that EITHER trigger or grip grabs, held objects stay held (toggle),
-/// and the drawing hand does not grab anything while shooting.
+/// select input so that EITHER trigger or grip grabs, an object is held only while the button is held
+/// (let go and it drops), the drawing hand does not grab anything while shooting, and the hand holding
+/// the bow cannot let go of it while shooting.
 /// </summary>
 [DefaultExecutionOrder(10)]   // after XRInteractionManager, so queued input is never overwritten before it is read
 public class HandInput : MonoBehaviour
@@ -23,13 +24,15 @@ public class HandInput : MonoBehaviour
     [SerializeField] XRBaseInputInteractor grabInteractor;   // this hand's Near-Far Interactor
 
     [Header("Grabbing")]
-    [SerializeField] bool toggleHold = true;                 // press once to pick up, press again to let go
+    [SerializeField] bool toggleHold = false;                // off: hold the button to hold the object, let go to drop it. On: press once to pick up, press again to let go
     [SerializeField] float pressAt = 0.6f;
     [SerializeField] float releaseAt = 0.4f;
 
     public Handedness Side => side;
     public float Grip { get; private set; }
     public float Trigger { get; private set; }
+    /// <summary>How hard the hand is squeezing: the grip (side button) or the trigger, whichever is further down.</summary>
+    public float Squeeze => Mathf.Max(Grip, Trigger);
     public HandMode Mode { get; private set; }
     public bool Holding => grabInteractor != null && grabInteractor.hasSelection;
     public bool HoldingArrow { get; set; }   // set by the Quiver while this hand carries an arrow
@@ -70,10 +73,26 @@ public class HandInput : MonoBehaviour
 
         float grab = Mode == HandMode.StringHook ? 0f : Mathf.Max(Grip, Trigger);
         bool was = pressed;
-        if (grab > pressAt) pressed = true;
+        if (HoldsBowWhileShooting())
+        {
+            pressed = true;      // the bow hand cannot let go of the bow on the shooting line: its buttons do nothing
+            grab = 1f;
+        }
+        else if (grab > pressAt) pressed = true;
         else if (grab < releaseAt) pressed = false;
 
         grabInteractor.selectInput.QueueManualState(pressed, grab, pressed && !was, !pressed && was);
+    }
+
+    // The hand that is not drawing, while shooting, with something (the bow) in it.
+    bool HoldsBowWhileShooting()
+    {
+        var range = RangeStateController.Instance;
+        var hands = HandednessManager.Instance;
+        return range != null && hands != null
+            && range.State == RangeState.Shooting
+            && hands.Current != side
+            && Holding;
     }
 
     bool IsDrawHandWhileShooting()

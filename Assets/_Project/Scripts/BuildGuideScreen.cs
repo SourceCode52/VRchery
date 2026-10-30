@@ -42,7 +42,7 @@ public class BuildGuideScreen : MonoBehaviour
     [SerializeField] string riserLabel = "STEP 1";
     [SerializeField] string riserTitle = "Place the riser on the stand";
     [TextArea(2, 5)]
-    [SerializeField] string riserBody = "Pick up the riser, hold it over the stand platform and lower it down. It clicks in and stays there.";
+    [SerializeField] string riserBody = "Pick up the riser and hold it over the stand platform in the right position. Let go and it locks into place.";
 
     [Header("Then these parts, in any order")]
     [SerializeField] List<BuildPart> parts = new List<BuildPart>();

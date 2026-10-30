@@ -44,9 +44,10 @@ public class HandPoser : MonoBehaviour
 
         if (input.Mode == HandMode.StringHook && !input.HoldingArrow)
         {
-            float hook = input.Trigger * hookCurl;
+            float squeeze = input.Squeeze;       // grip or trigger
+            float hook = squeeze * hookCurl;
             tIndex = tMiddle = tRing = hook;
-            tPinky = input.Trigger * pinkyCurl;
+            tPinky = squeeze * pinkyCurl;
             tThumb = 0f;
         }
         else
