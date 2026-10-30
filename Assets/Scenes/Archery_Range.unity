@@ -921,6 +921,7 @@ GameObject:
   - component: {fileID: 101032199}
   - component: {fileID: 101032198}
   - component: {fileID: 101032201}
+  - component: {fileID: 101032202}
   m_Layer: 0
   m_Name: Sight
   m_TagString: Untagged
@@ -1136,6 +1137,24 @@ MonoBehaviour:
   fullVolumeSpeed: 4
   quietAtStart: 2
   cooldown: 0.15
+--- !u!114 &101032202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 101032196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee4b9d7a76499e4091f004ef5c2dba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartLabel
+  labelText: Sight
+  labelPrefab: {fileID: 1435639744692804995, guid: b495f567d8635ae4691938380539b6a2, type: 3}
+  showSeconds: 3
+  popInTime: 0.12
+  fadeOutTime: 0.25
+  ringLift: 0.012
 --- !u!1 &101669830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1989,6 +2008,7 @@ GameObject:
   - component: {fileID: 249979879}
   - component: {fileID: 249979878}
   - component: {fileID: 249979881}
+  - component: {fileID: 249979882}
   m_Layer: 0
   m_Name: LimbLower
   m_TagString: Untagged
@@ -2204,6 +2224,24 @@ MonoBehaviour:
   fullVolumeSpeed: 4
   quietAtStart: 2
   cooldown: 0.15
+--- !u!114 &249979882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249979876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee4b9d7a76499e4091f004ef5c2dba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartLabel
+  labelText: Lower Limb
+  labelPrefab: {fileID: 1435639744692804995, guid: b495f567d8635ae4691938380539b6a2, type: 3}
+  showSeconds: 3
+  popInTime: 0.12
+  fadeOutTime: 0.25
+  ringLift: 0.012
 --- !u!1 &267499902
 GameObject:
   m_ObjectHideFlags: 0
@@ -9083,6 +9121,7 @@ GameObject:
   - component: {fileID: 1086389562}
   - component: {fileID: 1086389561}
   - component: {fileID: 1086389564}
+  - component: {fileID: 1086389565}
   m_Layer: 0
   m_Name: Riser
   m_TagString: Untagged
@@ -9303,6 +9342,24 @@ MonoBehaviour:
   fullVolumeSpeed: 4
   quietAtStart: 2
   cooldown: 0.15
+--- !u!114 &1086389565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086389559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee4b9d7a76499e4091f004ef5c2dba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartLabel
+  labelText: Riser
+  labelPrefab: {fileID: 1435639744692804995, guid: b495f567d8635ae4691938380539b6a2, type: 3}
+  showSeconds: 3
+  popInTime: 0.12
+  fadeOutTime: 0.25
+  ringLift: 0.012
 --- !u!1 &1092077404
 GameObject:
   m_ObjectHideFlags: 0
@@ -15282,6 +15339,7 @@ GameObject:
   - component: {fileID: 1813506187}
   - component: {fileID: 1813506186}
   - component: {fileID: 1813506189}
+  - component: {fileID: 1813506190}
   m_Layer: 0
   m_Name: 'LimbUpper '
   m_TagString: Untagged
@@ -15497,6 +15555,24 @@ MonoBehaviour:
   fullVolumeSpeed: 4
   quietAtStart: 2
   cooldown: 0.15
+--- !u!114 &1813506190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813506184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee4b9d7a76499e4091f004ef5c2dba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartLabel
+  labelText: Upper Limb
+  labelPrefab: {fileID: 1435639744692804995, guid: b495f567d8635ae4691938380539b6a2, type: 3}
+  showSeconds: 3
+  popInTime: 0.12
+  fadeOutTime: 0.25
+  ringLift: 0.012
 --- !u!1 &1835183122
 GameObject:
   m_ObjectHideFlags: 0
@@ -16704,6 +16780,7 @@ GameObject:
   - component: {fileID: 1959640595}
   - component: {fileID: 1959640594}
   - component: {fileID: 1959640597}
+  - component: {fileID: 1959640598}
   m_Layer: 0
   m_Name: Stabiliser
   m_TagString: Untagged
@@ -16923,6 +17000,24 @@ MonoBehaviour:
   fullVolumeSpeed: 4
   quietAtStart: 2
   cooldown: 0.15
+--- !u!114 &1959640598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959640592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee4b9d7a76499e4091f004ef5c2dba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartLabel
+  labelText: Stabiliser
+  labelPrefab: {fileID: 1435639744692804995, guid: b495f567d8635ae4691938380539b6a2, type: 3}
+  showSeconds: 3
+  popInTime: 0.12
+  fadeOutTime: 0.25
+  ringLift: 0.012
 --- !u!1 &1971776960
 GameObject:
   m_ObjectHideFlags: 0
@@ -17973,6 +18068,7 @@ GameObject:
   - component: {fileID: 2080059227}
   - component: {fileID: 2080059226}
   - component: {fileID: 2080059229}
+  - component: {fileID: 2080059230}
   m_Layer: 0
   m_Name: String
   m_TagString: Untagged
@@ -18190,6 +18286,24 @@ MonoBehaviour:
   fullVolumeSpeed: 4
   quietAtStart: 2
   cooldown: 0.15
+--- !u!114 &2080059230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2080059224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ee4b9d7a76499e4091f004ef5c2dba3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PartLabel
+  labelText: String
+  labelPrefab: {fileID: 1435639744692804995, guid: b495f567d8635ae4691938380539b6a2, type: 3}
+  showSeconds: 3
+  popInTime: 0.12
+  fadeOutTime: 0.25
+  ringLift: 0.012
 --- !u!1 &2103483587
 GameObject:
   m_ObjectHideFlags: 0
