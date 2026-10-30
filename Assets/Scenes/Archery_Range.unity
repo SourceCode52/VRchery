@@ -920,7 +920,6 @@ GameObject:
   - component: {fileID: 101032200}
   - component: {fileID: 101032199}
   - component: {fileID: 101032198}
-  - component: {fileID: 101032201}
   - component: {fileID: 101032202}
   m_Layer: 0
   m_Name: Sight
@@ -1121,22 +1120,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &101032201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 101032196}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
-  minImpactSpeed: 0.8
-  fullVolumeSpeed: 4
-  quietAtStart: 2
-  cooldown: 0.15
 --- !u!114 &101032202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2007,7 +1990,6 @@ GameObject:
   - component: {fileID: 249979880}
   - component: {fileID: 249979879}
   - component: {fileID: 249979878}
-  - component: {fileID: 249979881}
   - component: {fileID: 249979882}
   m_Layer: 0
   m_Name: LimbLower
@@ -2208,22 +2190,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &249979881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 249979876}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
-  minImpactSpeed: 0.8
-  fullVolumeSpeed: 4
-  quietAtStart: 2
-  cooldown: 0.15
 --- !u!114 &249979882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8572,12 +8538,18 @@ MonoBehaviour:
     volume: 0.65
     pitchVariation: 0.04
     positional: 1
+  - cue: 13
+    clip: {fileID: 8300000, guid: 8b774531f874e1343ab7393c8e29a149, type: 3}
+    volume: 0.85
+    pitchVariation: 0.04
+    positional: 1
   voices: 12
   minDistance: 1.5
   maxDistance: 30
   teleportationProvider: {fileID: 0}
   whooshDelay: 0.03
   drawMinSpeed: 0.25
+  missGap: 0.05
   minShotDraw: 0.08
   logPlays: 0
 --- !u!4 &1018191763
@@ -9120,7 +9092,6 @@ GameObject:
   - component: {fileID: 1086389563}
   - component: {fileID: 1086389562}
   - component: {fileID: 1086389561}
-  - component: {fileID: 1086389564}
   - component: {fileID: 1086389565}
   m_Layer: 0
   m_Name: Riser
@@ -9326,22 +9297,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1086389564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086389559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
-  minImpactSpeed: 0.8
-  fullVolumeSpeed: 4
-  quietAtStart: 2
-  cooldown: 0.15
 --- !u!114 &1086389565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10728,7 +10683,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OrientationFilter
   target: {fileID: 1323134789}
-  maxAngle: 45
+  maxAngle: 60
 --- !u!1 &1199005489
 GameObject:
   m_ObjectHideFlags: 0
@@ -15338,7 +15293,6 @@ GameObject:
   - component: {fileID: 1813506188}
   - component: {fileID: 1813506187}
   - component: {fileID: 1813506186}
-  - component: {fileID: 1813506189}
   - component: {fileID: 1813506190}
   m_Layer: 0
   m_Name: 'LimbUpper '
@@ -15539,22 +15493,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &1813506189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1813506184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
-  minImpactSpeed: 0.8
-  fullVolumeSpeed: 4
-  quietAtStart: 2
-  cooldown: 0.15
 --- !u!114 &1813506190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16779,7 +16717,6 @@ GameObject:
   - component: {fileID: 1959640596}
   - component: {fileID: 1959640595}
   - component: {fileID: 1959640594}
-  - component: {fileID: 1959640597}
   - component: {fileID: 1959640598}
   m_Layer: 0
   m_Name: Stabiliser
@@ -16984,22 +16921,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1959640597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1959640592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
-  minImpactSpeed: 0.8
-  fullVolumeSpeed: 4
-  quietAtStart: 2
-  cooldown: 0.15
 --- !u!114 &1959640598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18021,7 +17942,7 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.02
-  m_Height: 1.4184451
+  m_Height: 1.12
   m_Direction: 0
   m_Center: {x: 0.17860317, y: 0.017, z: 0.147}
 --- !u!1 &2070531537
@@ -18067,7 +17988,6 @@ GameObject:
   - component: {fileID: 2080059228}
   - component: {fileID: 2080059227}
   - component: {fileID: 2080059226}
-  - component: {fileID: 2080059229}
   - component: {fileID: 2080059230}
   m_Layer: 0
   m_Name: String
@@ -18270,22 +18190,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &2080059229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2080059224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eee3b3e315283f841ac95e00822812fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PartDropSound
-  minImpactSpeed: 0.8
-  fullVolumeSpeed: 4
-  quietAtStart: 2
-  cooldown: 0.15
 --- !u!114 &2080059230
 MonoBehaviour:
   m_ObjectHideFlags: 0

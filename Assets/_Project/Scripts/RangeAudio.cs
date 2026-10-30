@@ -27,7 +27,8 @@ public class RangeAudio : MonoBehaviour
         Miss,             // the arrow missed the target (failure chord)
         Teleport,         // the player teleports (dirt crunch)
         BowBuilt,         // the bow has been fully assembled
-        PartDrop          // a loose part is dropped or knocked on the table or floor
+        PartDrop,         // (no longer used: part drops are silent)
+        Nock              // an arrow clicks onto the string
     }
 
     [Serializable]
@@ -53,6 +54,7 @@ public class RangeAudio : MonoBehaviour
     [SerializeField] TeleportationProvider teleportationProvider;   // found automatically if empty
     [SerializeField] float whooshDelay = 0.03f;                     // the whoosh follows the snap of the string a moment later
     [SerializeField] float drawMinSpeed = 0.25f;                    // metres per second the string must move to creak again while still drawing
+    [SerializeField] float missGap = 0.05f;                         // pause between the end of the shot sounds and the miss chord, so it never plays over them
     [SerializeField] float minShotDraw = 0.08f;                     // same as the bow's minimum draw: shorter pulls do not fire
 
     [Header("Debug")]
@@ -69,13 +71,14 @@ public class RangeAudio : MonoBehaviour
 
     class BowState
     {
-        public bool held, drawing;
+        public bool held, drawing, hasArrow;
         public float lastDraw;
         public float nextCreak;
         public int endFrame = -1;
     }
     readonly Dictionary<Bow, BowState> bows = new Dictionary<Bow, BowState>();
     int loosedFrame = -10;
+    float shotSoundEnd = -1f;   // when the sounds of the last shot (snap and whoosh) finish
 
     void Awake()
     {
@@ -150,7 +153,7 @@ public class RangeAudio : MonoBehaviour
             if (bow == null) continue;
             if (!bows.TryGetValue(bow, out BowState st))
             {
-                st = new BowState { held = bow.IsHeld, drawing = bow.Drawing };   // first sight of a bow: no sound for how it already is
+                st = new BowState { held = bow.IsHeld, drawing = bow.Drawing, hasArrow = bow.HasArrow };   // first sight of a bow: no sound for how it already is
                 bows[bow] = st;
             }
 
@@ -161,6 +164,11 @@ public class RangeAudio : MonoBehaviour
                 st.held = held;
                 Play(Cue.StringMove, bow.transform.position);
             }
+
+            // an arrow clicks onto the string (a bow that makes its own arrow once the draw starts does not count)
+            bool hasArrow = bow.HasArrow;
+            if (hasArrow && !st.hasArrow && !bow.Drawing) Play(Cue.Nock, bow.transform.position);
+            st.hasArrow = hasArrow;
 
             // pulling back
             bool drawing = bow.Drawing;
@@ -201,12 +209,13 @@ public class RangeAudio : MonoBehaviour
         if (bow.HasArrow || st.lastDraw < minShotDraw)
             Play(Cue.StringDetension, bow.transform.position);               // string eased back, arrow still on it (or a tiny pull)
         else
-            Play(Cue.BowRelease, bow.transform.position);                    // string let go with no arrow: it snaps
+            Play(Cue.Miss, bow.transform.position);                          // string let go with no arrow (dry fire): the failure chord
     }
 
     void OnLoosed(Bow bow)
     {
         loosedFrame = Time.frameCount;
+        shotSoundEnd = Time.time + Mathf.Max(ClipLength(Cue.BowRelease), whooshDelay + ClipLength(Cue.ArrowWhoosh));
         Vector3 p = bow.transform.position;
         Play(Cue.BowRelease, p);
         Play(Cue.ArrowWhoosh, p, 1f, whooshDelay);
@@ -215,8 +224,14 @@ public class RangeAudio : MonoBehaviour
     // ---------------------------------------------------------------- arrows and the player
     void OnArrowLanded(Arrow arrow, bool onTarget, Vector3 point)
     {
-        Play(onTarget ? Cue.ArrowHit : Cue.Miss, point);
+        if (onTarget) { Play(Cue.ArrowHit, point); return; }
+
+        // the miss chord waits until the shot's own sounds are over
+        float wait = shotSoundEnd - Time.time;
+        Play(Cue.Miss, point, 1f, wait > 0f ? wait + missGap : 0f);
     }
+
+    float ClipLength(Cue cue) => byCue.TryGetValue(cue, out Entry e) && e.clip != null ? e.clip.length / Mathf.Max(0.1f, 1f - e.pitchVariation) : 0f;
 
     void OnTeleported(UnityEngine.XR.Interaction.Toolkit.Locomotion.LocomotionProvider provider)
     {
